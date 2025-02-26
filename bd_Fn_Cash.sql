@@ -1,17 +1,11 @@
 create database fncash;
 use fncash;
 
-create table tb_cadastro(
-id_cadastro int primary key auto_increment,
-nm_cadastro varchar(45) not null,
-nm_email varchar(255) not null,
-senha_cadastro varchar(45) not null
-);
-
-create table tb_login(
-id_login int primary key auto_increment,
-email_login varchar(255) not null,
-senha_login varchar(45) not null
+create table usuario(
+id_usuario int primary key auto_increment,
+nm_usuario varchar(150) not null,
+nm_email varchar(255) not null unique,
+senha_usuario varchar(100) not null
 );
 
 create table tb_despesa(
