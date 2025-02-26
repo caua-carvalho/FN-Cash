@@ -2,7 +2,7 @@
 include "conexao.php";
 
 function verificar_email($conn, $email) {
-    $sql = "SELECT id_user FROM usuario WHERE email_user = ?";
+    $sql = "SELECT id_usuario FROM usuario WHERE email_usuario = ?";
     $stmt = $conn->prepare($sql);
     
     if (!$stmt) {
