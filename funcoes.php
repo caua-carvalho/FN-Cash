@@ -13,6 +13,6 @@ function verificar_email($conn, $email) {
     $stmt->execute();
     $result = $stmt->get_result();
 
-    return $result->num_rows > 0; // Retorna true se o email já existir
+    return $result->num_rows > 0; // retorna true se o email já existir
 }
 ?>
