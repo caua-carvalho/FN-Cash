@@ -10,19 +10,6 @@
     ];
     $plans = [
         [
-            'name' => 'Gratuito',
-            'price' => '0',
-            'features' => ['Controle básico', 'Até 3 contas', 'Relatórios simples', 'Suporte por email']
-        ],
-        [
-            'name' => 'Plus',
-            'price' => '9,90',
-            'features' => ['Controle avançado', 'Até 10 contas', 'Relatórios detalhados', 'Suporte prioritário']
-        ],
-        [
-            'name' => 'Premium',
-            'price' => '19,90',
-            'features' => ['Controle ilimitado', 'Contas ilimitadas', 'Relatórios avançados', 'Suporte 24/7']
         ]
     ];
     $stats = [
@@ -54,21 +41,6 @@
     // Adicionar dados para preços anuais
     $annual_plans = [
         [
-            'name' => 'Gratuito',
-            'price' => '0',
-            'features' => ['Controle básico', 'Até 3 contas', 'Relatórios simples', 'Suporte por email']
-        ],
-        [
-            'name' => 'Plus',
-            'price' => '99,90',
-            'savings' => '20%',
-            'features' => ['Controle avançado', 'Até 10 contas', 'Relatórios detalhados', 'Suporte prioritário']
-        ],
-        [
-            'name' => 'Premium',
-            'price' => '199,90',
-            'savings' => '25%',
-            'features' => ['Controle ilimitado', 'Contas ilimitadas', 'Relatórios avançados', 'Suporte 24/7']
         ]
     ];
 
@@ -1217,13 +1189,16 @@
     <!-- Header -->
     <header>
         <div class="container header-content">
-            <div class="logo">FN Cash</div>
+            <div class="logo">
+                <img src="img/logo.jpg" alt="FN Cash Logo" style="height: 90px; width: auto;">
+            </div>
             <nav>
                 <a href="#recursos">Recursos</a>
                 <a href="#planos">Planos</a>
                 <a href="#sobre">Sobre</a>
                 <a href="bancos.php">Bancos</a>
-                <a href="#entrar">Entrar</a>
+                <a href="login.php">Entrar</a>
+                <a href="register.php">Registrar</a>
             </nav>
             <button class="mobile-menu-btn">☰</button>
         </div>
@@ -1232,7 +1207,8 @@
             <a href="#planos">Planos</a>
             <a href="#sobre">Sobre</a>
             <a href="bancos.php">Bancos</a>
-            <a href="#entrar">Entrar</a>
+            <a href="login.php">Entrar</a>
+            <a href="register.php">Registrar</a>
         </div>
     </header>
 
@@ -1310,48 +1286,6 @@
         </div>
     </section>
 
-    <!-- Pricing Section -->
-    <section class="plans" id="planos">
-        <div class="container">
-            <h2>Escolha seu plano</h2>
-            <div class="pricing-toggle">
-                <span>Mensal</span>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="billing-toggle">
-                    <span class="toggle-slider"></span>
-                </label>
-                <span>Anual</span>
-            </div>
-            
-            <!-- Countdown Timer -->
-            <div class="countdown">
-                <h3>Promoção especial! Termina em:</h3>
-                <div class="countdown-timer">
-                    <div class="countdown-item">
-                        <span id="days">00</span>
-                        <p>Dias</p>
-                    </div>
-                    <div class="countdown-item">
-                        <span id="hours">00</span>
-                        <p>Horas</p>
-                    </div>
-                    <div class="countdown-item">
-                        <span id="minutes">00</span>
-                        <p>Minutos</p>
-                    </div>
-                    <div class="countdown-item">
-                        <span id="seconds">00</span>
-                        <p>Segundos</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="plans-grid" id="plans-container">
-                <!-- Plans will be dynamically populated -->
-            </div>
-        </div>
-    </section>
-
     <!-- Mobile Mockup Section -->
     <section class="mobile-mockup">
         <div class="container">
@@ -1361,16 +1295,15 @@
                     <p>Acesse suas finanças de qualquer lugar, a qualquer momento. Nossa interface responsiva garante a melhor experiência em qualquer dispositivo.</p>
                 </div>
                 <div class="phone-wrapper">
-                    <div class="phone-frame">
-                        <div class="phone-screen">
-                            <div class="phone-notch"></div>
-                            <div class="phone-content">
-                                <h3>FN Cash</h3>
-                                <p>Suas finanças simplificadas</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    <div class="phone-frame">
+        <div class="phone-screen">
+            <div class="phone-notch"></div>
+            <div class="phone-content">
+                <img src="img/logo.jpg" alt="FN Cash Logo" style="width: 180px; margin: 0 auto 80px;">
+            </div>
+        </div>
+    </div>
+</div>
             </div>
         </div>
     </section>
