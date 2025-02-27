@@ -17,9 +17,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         header("Location: cadastro.php?email=existente");
         exit();
     } else {
-        $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
         $stmt = $conn->prepare("INSERT INTO usuario (nm_usuario, email_usuario, senha_usuario) VALUES (?, ?, ?)");
-        $stmt->bind_param("sss", $nome, $email, $senha_hash);
+        $stmt->bind_param("sss", $nome, $email, $senha);
         
         if ($stmt->execute()) {
             echo "Usuário cadastrado com sucesso!";
