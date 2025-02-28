@@ -1,6 +1,7 @@
 <?php
-include 'conexao.php';
-include 'funcoes.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/FN-CASH/conexao.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/FN-CASH/funcoes.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/FN-CASH/header.php';
 
 $exibirErro = false;
 
@@ -28,53 +29,47 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 ?>
-
-<!DOCTYPE html>
-<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        /* Overlay escuro */
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1050;
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out;
-        }
-
-        /* Card de erro */
-        .error-card {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            max-width: 300px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            transform: translateY(-20px);
-            transition: transform 0.3s ease-in-out;
-        }
-
-        .overlay.show {
-            display: flex;
-            opacity: 1;
-        }
-
-        .error-card.show {
-            transform: translateY(0);
-        }
-    </style>
 </head>
+<style>
+    /* Overlay escuro */
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 1050;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    /* Card de erro */
+    .error-card {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        max-width: 300px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        transform: translateY(-20px);
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .overlay.show {
+        display: flex;
+        opacity: 1;
+    }
+
+    .error-card.show {
+        transform: translateY(0);
+    }
+</style>
 
 <body>
 
@@ -97,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </div>
                     <button type="submit" class="btn btn-success w-100">Cadastrar</button>
                     <div class="d-flex justify-content-center mt-3">
-                        <a href="index.php" class="text-decoration-none">Já tem uma conta? Faça login</a>
+                        <a href="<?php echo $base_url; ?>/login/login.php" class="text-decoration-none">Já tem uma conta? Faça login</a>
                     </div>
                 </form>
             </div>
@@ -130,7 +125,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <?php endif; ?>
         });
     </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-</html>

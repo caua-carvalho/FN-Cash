@@ -1,3 +1,7 @@
+<?php
+$base_url = "/FN-CASH";
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
