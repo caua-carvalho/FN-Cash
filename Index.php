@@ -81,7 +81,7 @@
                 ],
                 [
                     'question' => 'Qual a diferença entre os planos?',
-                    'answer' => 'Os planos se diferenciam principalmente pelo número de contas, recursos avançados e nível de suporte oferecido.'
+                    'answer' => 'Os planos se diferenciam principalmente pelo número de contas,  cursos avançados e nível de suporte oferecido.'
                 ]
             ]
         ],
@@ -171,11 +171,11 @@
             font-family: 'Inter', sans-serif;
         }
         :root {
-            --primary: #07A262;
+            --primary: #1E1E1E;
             --secondary: #4E997E;
             --accent: #055336;
             --text: #043821;
-            --light: #FAFAFA;
+            --light: #fafafa;
             --gradient: linear-gradient(135deg, #07A262, #4E997E, #055336);
         }
         body {
@@ -188,7 +188,7 @@
             padding: 0 20px;
         }
         header {
-            background: white;
+            background: var(--primary);
             position: fixed;
             width: 100%;
             top: 0;
@@ -199,7 +199,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 0;
+            padding: 5px 0;
+            padding-left: 10px;
+            padding-right: 20px;
         }
         .logo {
             font-size: 24px;
@@ -208,7 +210,7 @@
         }
         nav a {
             text-decoration: none;
-            color: var(--text);
+            color: var(--light);
             margin-left: 30px;
             font-weight: 500;
             position: relative;
@@ -222,11 +224,11 @@
             left: 0;
             width: 0;
             height: 2px;
-            background: var(--primary);
+            background: var(--secondary);
             transition: width 0.3s ease;
         }
         nav a:hover {
-            color: var(--primary);
+            color: var(--secondary);
         }
         nav a:hover::after {
             width: 100%;
@@ -237,7 +239,7 @@
             background: none;
             border: none;
             cursor: pointer;
-            color: var(--primary);
+            color: var(--light);
         }
         .mobile-menu {
             display: none;
@@ -245,7 +247,7 @@
             top: 70px;
             left: 0;
             right: 0;
-            background: white;
+            background: var(--primary);
             padding: 20px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
@@ -257,7 +259,7 @@
             display: block;
             padding: 15px;
             text-decoration: none;
-            color: var(--text);
+            color: var(--light);
             transition: all 0.3s ease;
             border-radius: 5px;
         }
@@ -870,7 +872,7 @@
             margin-bottom: 15px;
         }
         .faq-header p {
-            color: #666;
+            color: var(--light);
             font-size: 18px;
             max-width: 600px;
             margin: 0 auto;
@@ -1164,33 +1166,15 @@
 </head>
 <body>
     <!-- Loading Screen -->
-    <div class="loading-screen">
+    <!-- <div class="loading-screen">
         <div class="loader"></div>
-    </div>
-
-    <!-- Top Menu -->
-    <div class="top-menu-bar">
-        <div class="container">
-            <div class="top-menu">
-                <?php foreach($top_menu as $key => $menu): ?>
-                    <div class="top-menu-item">
-                        <span class="top-menu-trigger"><?php echo $menu['title']; ?></span>
-                        <div class="top-menu-dropdown">
-                            <?php foreach($menu['items'] as $item): ?>
-                                <a href="<?php echo $item['url']; ?>"><?php echo $item['name']; ?></a>
-                            <?php endforeach; ?>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-        </div>
-    </div>
+    </div> -->
 
     <!-- Header -->
     <header>
         <div class="container header-content">
             <div class="logo">
-                <img src="img/logo.jpg" alt="FN Cash Logo" style="height: 90px; width: auto;">
+                <img src="img/logo.svg" alt="FN Cash Logo" style="height: 70px; width: auto;">
             </div>
             <nav>
                 <a href="#recursos">Recursos</a>
