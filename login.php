@@ -1,50 +1,38 @@
 <?php
 session_start();
-header('Content-Type: text/html; charset=utf-8');
+require 'conexao.php'; // Inclua seu arquivo de conexão
 
-// Configurações do banco de dados
-$db_host = 'localhost';
-$db_user = 'root';
-$db_pass = '';
-$db_name = 'fn_cash';
-
-// Inicializa variáveis
 $error = '';
 $success = '';
 $user_input = '';
 
-// Processa o formulário quando enviado
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $user_input = trim($_POST['user_input'] ?? '');
     $password = $_POST['password'] ?? '';
 
-    // Validação
     if (empty($user_input) || empty($password)) {
         $error = "Todos os campos são obrigatórios.";
     } else {
-        try {
-            $conn = new PDO("mysql:host=$db_host;dbname=$db_name;charset=utf8mb4", $db_user, $db_pass);
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $stmt = $conexao->prepare("SELECT * FROM usuario WHERE email_usuario = ? OR nm_usuario = ?");
+        $stmt->bind_param("ss", $user_input, $user_input);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $usuario = $result->fetch_assoc();
 
-            // Verifica se o input é email ou nome
-            $stmt = $conn->prepare("SELECT * FROM users WHERE email = ? OR name = ?");
-            $stmt->execute([$user_input, $user_input]);
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
-            
-            if ($user && password_verify($password, $user['password'])) {
-                $_SESSION['user_id'] = $user['id'];
-                $_SESSION['user_name'] = $user['name'];
-                header("Location: dashboard.php");
-                exit();
-            } else {
-                $error = "Credenciais inválidas.";
-            }
-        } catch(PDOException $e) {
-            $error = "Erro de conexão: " . $e->getMessage();
+        if ($usuario && password_verify($password, $usuario['senha_usuario'])) { // Verifique o nome correto da coluna
+            $_SESSION['id'] = $usuario['id_usuario'];
+            $_SESSION['nome'] = $usuario['nm_usuario'];
+            header("Location: index.php"); // Redirecionamento corrigido
+            exit();
+        } else {
+            $error = "Credenciais inválidas.";
         }
+        $stmt->close();
     }
 }
 ?>
+
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
