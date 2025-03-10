@@ -9,7 +9,7 @@
     --secondary: #4E997E;
     --accent: #055336;
     --text: #043821;
-    --light: #fafafa;
+    --light: #ffffff;
     --gradient: linear-gradient(135deg, #07A262, #4E997E, #055336);
 }
 body {
@@ -34,7 +34,7 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 5px 0;
-    padding-left: 10px;
+    padding-left: 20px;
     padding-right: 20px;
 }
 .logo {
@@ -46,7 +46,6 @@ nav a {
     text-decoration: none;
     color: var(--light);
     margin-left: 30px;
-    font-weight: 500;
     position: relative;
     transition: all 0.3s ease;
     padding: 5px 0;
@@ -109,7 +108,7 @@ nav a:hover::after {
 .hero {
     background: var(--gradient);
     color: white;
-    padding: 160px 0 100px;
+    padding: 70px 0 100px;
     text-align: center;
     overflow: hidden;
     position: relative;
