@@ -1,47 +1,48 @@
 <?php
 session_start();
+require 'conexao.php';
 
 $error = "";
-$success = "";
+$sucesso = "";
+$nome = "";
+$email = "";
 
-// Processa o formulário quando enviado
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $name = trim($_POST['name'] ?? '');
+    $nome = trim($_POST['name'] ?? '');
     $email = trim($_POST['email'] ?? '');
     $password = $_POST['password'] ?? '';
 
-    // Validação
-    if (empty($name) || empty($email) || empty($password)) {
+    if (empty($nome) || empty($email) || empty($password)) {
         $error = "Todos os campos são obrigatórios.";
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = "E-mail inválido.";
     } else {
-        try {
-            $conn = new PDO("mysql:host=$db_host;dbname=$db_name;charset=utf8mb4", $db_user, $db_pass);
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        // Verifica se o email já existe
+        $stmt = $conexao->prepare("SELECT id_usuario FROM usuario WHERE email_usuario = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $stmt->store_result();
 
-            // Verifica se o email já existe
-            $stmt = $conn->prepare("SELECT id FROM users WHERE email = ?");
-            $stmt->execute([$email]);
+        if ($stmt->num_rows > 0) {
+            $error = "Este e-mail já está cadastrado.";
+        } else {
+            // Insere novo usuário
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+            $stmt = $conexao->prepare("INSERT INTO usuario (nm_usuario, email_usuario, senha_usuario) VALUES (?, ?, ?)");
+            $stmt->bind_param("sss", $nome, $email, $hashed_password);
             
-            if ($stmt->rowCount() > 0) {
-                $error = "Este e-mail já está cadastrado.";
+            if ($stmt->execute()) {
+                $sucesso = "Registro realizado com sucesso!";
+                $nome = $email = '';
             } else {
-                // Insere novo usuário
-                $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-                $stmt = $conn->prepare("INSERT INTO users (name, email, password) VALUES (?, ?, ?)");
-                $stmt->execute([$name, $email, $hashed_password]);
-                
-                $success = "Registro realizado com sucesso!";
-                $name = $email = ''; // Limpa os campos
+                $error = "Erro ao registrar usuário.";
             }
-        } catch(PDOException $e) {
-            $error = "Erro de conexão: " . $e->getMessage();
         }
+        $stmt->close();
     }
 }
-
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -52,6 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/auth.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="auth-container">
@@ -69,8 +71,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="error"><?php echo $error; ?></div>
             <?php endif; ?>
             
-            <?php if ($success): ?>
-                <div class="success"><?php echo $success; ?></div>
+            <?php if ($sucesso): ?>
+                <div class="success"><?php echo $sucesso; ?></div>
             <?php endif; ?>
 
             <h2>Crie sua conta grátis</h2>
@@ -80,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="form-group">
                     <label for="name">Nome completo</label>
                     <input type="text" id="name" name="name" 
-                           value="<?php echo htmlspecialchars($name); ?>" 
+                           value="<?php echo htmlspecialchars($nome); ?>" 
                            placeholder="Digite seu nome completo">
                 </div>
 
