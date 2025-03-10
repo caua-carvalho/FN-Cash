@@ -1,18 +1,8 @@
 <?php
 session_start();
-header('Content-Type: text/html; charset=utf-8');
 
-// Configurações do banco de dados
-$db_host = 'localhost';
-$db_user = 'root';
-$db_pass = '';
-$db_name = 'fn_cash';
-
-// Inicializa variáveis
-$error = '';
-$success = '';
-$name = '';
-$email = '';
+$error = "";
+$success = "";
 
 // Processa o formulário quando enviado
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -96,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 <div class="form-group">
                     <label for="email">E-mail</label>
-                    <input type="email" id="email" name="email" 
+                    <input type="text" id="email" name="email" 
                            value="<?php echo htmlspecialchars($email); ?>" 
                            placeholder="Digite seu melhor email">
                 </div>
