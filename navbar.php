@@ -1,7 +1,7 @@
 <header>
         <div class="container header-content">
             <div class="logo">
-                <img src="img/icone.svg" alt="FN Cash Logo" style="height: 40px; width: auto;">
+                <img src="img/icone.svg" alt="FN Cash Logo" style="height: 40px; width: auto;" class="my-1">
             </div>
             <nav>
                 <a href="#recursos">Recursos</a>
