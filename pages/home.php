@@ -85,8 +85,8 @@ require_once "../validacao_login.php";
                     <hr>
                     <div class="dropdown">
                         <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="/api/placeholder/32/32" alt="usuário" width="32" height="32" class="rounded-circle me-2">
-                            <strong>Usuário</strong>
+                            <i class="bi bi-person-circle"></i>
+                            <strong><?php echo $_SESSION['nome']; ?></strong>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
                             <li><a class="dropdown-item" href="#">Perfil</a></li>
