@@ -182,7 +182,7 @@ require_once "header.php";
                 <a href="#comecar" class="btn btn-primary">Começar Gratuitamente</a>
             </div>
             <div class="hero-image">
-                <img src="https://placehold.co/400x500" alt="Pessoa usando FN Cash">
+                <img src="img/logo.svg" alt="Pessoa usando FN Cash">
             </div>
         </div>
     </section>
