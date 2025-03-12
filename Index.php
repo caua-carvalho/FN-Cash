@@ -1,4 +1,6 @@
 <?php
+require_once "header.php";
+
     $title = "Controle Financeiro | Seu app de finanças pessoais";
     $features = [
         ['icon' => '📊', 'title' => 'Gestão Financeira', 'desc' => 'Controle seus gastos e receitas com gráficos detalhados'],
@@ -154,14 +156,8 @@
         ['name' => 'Telegram', 'icon' => '✈️']
     ];
 ?>
-<!DOCTYPE html>
-<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $title; ?></title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <!-- Loading Screen -->
