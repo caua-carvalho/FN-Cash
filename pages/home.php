@@ -1,7 +1,7 @@
 <?php
-require "conexao.php";
-require "header.php";
-
+require "../conexao.php";
+require "../header.php";
+require_once "../validacao_login.php";
 
 ?>
 
@@ -38,10 +38,11 @@ require "header.php";
             <!-- Sidebar -->
             <div class="col-lg-2 bg-dark text-white p-0 sidebar">
                 <div class="d-flex flex-column p-3">
-                    <a href="#" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                        <i class="fas fa-chart-line fs-4 me-2"></i>
-                        <span class="fs-4">FinançasPRO</span>
-                    </a>
+                    <div class="logo d-flex align-items-center justify-content-center">
+                        <a href="#" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none" style="margin-right: 0 !important;">
+                            <img src="../img/logo.svg" class="fas fa-chart-line fs-4 me-2 my" style="width:auto; height:100px;"></img>
+                        </a>
+                    </div>
                     <hr>
                     <ul class="nav nav-pills flex-column mb-auto">
                         <li class="nav-item">
