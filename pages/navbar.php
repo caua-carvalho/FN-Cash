@@ -3,7 +3,7 @@
         <div class="logo d-flex align-items-center justify-content-center">
             <a href="#" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"
                 style="margin-right: 0 !important;">
-                <img src="../img/logo.svg" class="fas fa-chart-line fs-4 me-2 my"
+                <img src="<?php echo ($_SERVER['DOCUMENT_ROOT'] . '/FN-CASH/img/logo.svg'); ?>" class="fas fa-chart-line fs-4 me-2 my"
                     style="width:auto; height:100px;"></img>
             </a>
         </div>
@@ -16,7 +16,7 @@
                 </a>
             </li>
             <li>
-                <a href="contas.php" class="nav-link text-white">
+                <a href="../pages/contas/home.php" class="nav-link text-white">
                     <i class="fas fa-exchange-alt me-2"></i>
                     Contas
                 </a>

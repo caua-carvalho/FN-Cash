@@ -1,7 +1,7 @@
 <?php
-require_once "../header.php";
-require_once "../conexao.php";
-require_once "../validacao_login.php";
+require_once('../../header.php');
+require_once "../../conexao.php";
+require_once "../../validacao_login.php";
 ?>
     <style>
         .sidebar {
@@ -12,18 +12,18 @@ require_once "../validacao_login.php";
             top: 0;
         }
         
-        .nav-link {
-            color: rgba(255, 255, 255, 0.75);
+        .nav-tabs .nav-link {
+            color: rgba(33, 33, 33, 0.75);
         }
         
         .nav-link:hover {
-            color: white;
+            color: black;
         }
         
         .nav-link.active {
             color: white;
             font-weight: bold;
-            background-color: rgba(255, 255, 255, 0.1);
+            background-color: rgba(0, 0, 0, 0.1);
         }
         
         .tab-content {
@@ -67,7 +67,7 @@ require_once "../validacao_login.php";
     <div class="container-fluid">
         <div class="row">
             <!-- Sidebar -->
-            <?php require_once "navbar.php"; ?>
+            <?php require_once "../navbar.php"; ?>
             
             <!-- Main Content -->
             <main class="col-md-10 ml-sm-auto px-4 py-3">
@@ -265,8 +265,7 @@ require_once "../validacao_login.php";
                                             <label for="initialBalance">Saldo Inicial <span class="text-danger">*</span></label>
                                             <div class="input-group">
                                                 <div class="position-relative w-100">
-                                                    <span class="currency-symbol">R$</span>
-                                                    <input type="text" class="form-control currency-input" id="initialBalance" placeholder="0,00" required>
+                                                    <input type="text" class="form-control currency-input" id="initialBalance" placeholder="R$ 0,00" required>
                                                 </div>
                                             </div>
                                         </div>

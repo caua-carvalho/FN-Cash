@@ -2,6 +2,7 @@ create database fncash;
 use fncash;
 
 select * from usuario;
+
 create table usuario (
 	id_usuario int primary key auto_increment,
     nm_usuario varchar(100),
