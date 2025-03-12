@@ -21,4 +21,4 @@
             <a href="login.php">Entrar</a>
             <a href="register.php">Registrar</a>
         </div>
-    </header>
+</header>
