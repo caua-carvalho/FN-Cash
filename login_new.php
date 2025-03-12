@@ -1,39 +1,3 @@
-<?php
-session_start();
-require 'conexao.php';
-
-$error = '';
-$success = '';
-$user_input = '';
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $user_input = trim($_POST['user_input'] ?? '');
-    $password = $_POST['password'] ?? '';
-    $password_hash = password_hash($password, PASSWORD_DEFAULT);
-
-    if (empty($user_input) || empty($password)) {
-        $error = "Todos os campos são obrigatórios.";
-    } else {
-        $stmt = $conexao->prepare("SELECT * FROM usuario WHERE email_usuario = ? OR nm_usuario = ?");
-        $stmt->bind_param("ss", $user_input, $user_input);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $usuario = $result->fetch_assoc();
-
-        if ($usuario && password_verify($password_hash, $usuario['senha_usuario'])) { // Verifique o nome correto da coluna
-            $_SESSION['id'] = $usuario['id_usuario'];
-            $_SESSION['nome'] = $usuario['nm_usuario'];
-            header("Location: pages/home.php"); // Redirecionamento corrigido
-            exit();
-        } else {
-            $error = "Credenciais inválidas.";
-        }
-        $stmt->close();
-    }
-}
-?>
-
-<?php require_once "header.php"; ?>
 <style>
     :root {
         --primary: #07A262;
@@ -104,20 +68,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <body>
     <div class="login-container">
-        <a href="index.php" style="display: block; text-align: center; margin-bottom: 20px;" class="d-flex justify-content-center align-items-center">
-            <img src="img/logo.svg" alt="FN Cash Logo" style="height: 90px; width: auto;">
+        <a href="index.php" style="display: block; text-align: center; margin-bottom: 20px;">
+            <img src="img/logo.jpg" alt="FN Cash Logo" style="height: 90px; width: auto;">
         </a>
-
         <h2 style="text-align: center;">Login</h2>
-
         <?php if ($error): ?>
                 <div class="error"><?php echo $error; ?></div>
-        <?php endif; ?>
-
-        <form action="login.php" method="POST">
+            <?php endif; ?>
+        <form action="process_login.php" method="POST">
             <div class="form-group">
                 <label for="email">Email</label>
-                <input id="email" name="email" required>
+                <input type="email" id="email" name="email" required>
             </div>
             <div class="form-group">
                 <label for="password">Senha</label>

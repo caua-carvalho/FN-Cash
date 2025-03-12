@@ -1,6 +1,7 @@
 <?php
 session_start();
 require 'conexao.php';
+require 'header.php';
 
 $error = "";
 $sucesso = "";
@@ -43,68 +44,106 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Registro - FN Cash</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/auth.css">
-    <link rel="stylesheet" href="styles.css">
-</head>
+<style>
+    :root {
+        --primary: #07A262;
+        --secondary: #4E997E;
+        --accent: #055336;
+        --text: #043821;
+        --light: #FAFAFA;
+        --gradient: linear-gradient(135deg, #07A262, #4E997E, #055336);
+    }
+    body {
+        font-family: Arial, sans-serif;
+        background: var(--gradient);
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+    .register-container {
+        background: white;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.2);
+        width: 100%;
+        max-width: 400px;
+    }
+    .form-group {
+        margin-bottom: 20px;
+    }
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        color: var(--text);
+    }
+    .form-group input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+    .btn-register {
+        width: 100%;
+        padding: 12px;
+        background-color: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    .btn-register:hover {
+        background-color: var(--secondary);
+        transform: translateY(-2px);
+    }
+    .login-link {
+        text-align: center;
+        margin-top: 20px;
+    }
+    .login-link a {
+        color: var(--primary);
+        text-decoration: none;
+    }
+    .login-link a:hover {
+        color: var(--secondary);
+    }
+</style>
+
 <body>
-    <div class="auth-container">
-        <div class="auth-image">
-            <img src="img/financas.jpg" alt="Finanças Ilustração">
-        </div>
-        <div class="auth-box">
-            <div class="logo">
-                <a href="Index.php">
-                    <img src="img/logo.jpg" alt="FN Cash Logo">
-                </a>
+    <div class="register-container m-5">
+        <a href="index.php" style="display: block; text-align: center; margin-bottom: 20px;" class="d-flex justify-content-center align-items-center">
+            <img src="img/logo.svg" alt="FN Cash Logo" style="height: 90px; width: auto;">
+        </a>
+        <h2 style="text-align: center;">Criar Conta</h2>
+
+        <?php if ($error): ?>
+            <div class="error"><?php echo $error; ?></div>
+        <?php endif; ?>
+        
+        <?php if ($sucesso): ?>
+            <div class="success"><?php echo $sucesso; ?></div>
+        <?php endif; ?>
+
+        <form action="register.php" method="POST">
+            <div class="form-group">
+                <label for="name">Nome Completo</label>
+                <input type="text" id="name" name="name" required>
             </div>
-            
-            <?php if ($error): ?>
-                <div class="error"><?php echo $error; ?></div>
-            <?php endif; ?>
-            
-            <?php if ($sucesso): ?>
-                <div class="success"><?php echo $sucesso; ?></div>
-            <?php endif; ?>
-
-            <h2>Crie sua conta grátis</h2>
-            <p class="auth-subtitle">Comece a controlar suas finanças hoje mesmo</p>
-            
-            <form method="POST">
-                <div class="form-group">
-                    <label for="name">Nome completo</label>
-                    <input type="text" id="name" name="name" 
-                           value="<?php echo htmlspecialchars($nome); ?>" 
-                           placeholder="Digite seu nome completo">
-                </div>
-
-                <div class="form-group">
-                    <label for="email">E-mail</label>
-                    <input type="text" id="email" name="email" 
-                           value="<?php echo htmlspecialchars($email); ?>" 
-                           placeholder="Digite seu melhor email">
-                </div>
-
-                <div class="form-group">
-                    <label for="password">Senha</label>
-                    <input type="password" id="password" name="password" 
-                           placeholder="Mínimo 6 caracteres">
-                </div>
-
-                <button type="submit" class="btn">Criar conta gratuita</button>
-            </form>
-            
-            <div class="register-link">
-                <a href="login.php">Já tem uma conta? Faça login</a>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
             </div>
+            <div class="form-group">
+                <label for="password">Senha</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" class="btn-register">Criar Conta</button>
+        </form>
+        <div class="login-link">
+            <p>Já tem uma conta? <a href="login.php">Faça login</a></p>
         </div>
     </div>
 </body>
