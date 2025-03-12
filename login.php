@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($usuario && password_verify($password, $usuario['senha_usuario'])) { // Verifique o nome correto da coluna
             $_SESSION['id'] = $usuario['id_usuario'];
             $_SESSION['nome'] = $usuario['nm_usuario'];
-            header("Location: index.php"); // Redirecionamento corrigido
+            header("Location: pages/home.php"); // Redirecionamento corrigido
             exit();
         } else {
             $error = "Credenciais inválidas.";
