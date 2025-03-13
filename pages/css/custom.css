@@ -1,0 +1,632 @@
+/* ==========================================
+   SISTEMA DE GERENCIAMENTO FINANCEIRO - CSS BASE
+   ========================================== */
+
+   :root {
+    --primary: #1E1E1E;
+    --secondary: #4E997E;
+    --accent: #055336;
+    --text: #043821;
+    --light: #ffffff;
+    --gradient: linear-gradient(135deg, #07A262, #4E997E, #055336);
+    
+    /* Cores complementares derivadas */
+    --primary-light: #2a2a2a;
+    --primary-dark: #171717;
+    --secondary-light: #5aab8e;
+    --secondary-dark: #3d7a65;
+    --accent-light: #066542;
+    --accent-dark: #044128;
+    --text-light: #044f2e;
+    --text-dark: #032717;
+    
+    /* Cores de estado */
+    --success: #28a745;
+    --info: #17a2b8;
+    --warning: #ffc107;
+    --danger: #dc3545;
+    
+    /* Sombras */
+    --shadow-sm: 0 .125rem .25rem rgba(0,0,0,.075);
+    --shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+    --shadow-lg: 0 1rem 3rem rgba(0,0,0,.175);
+}
+
+/* ========== RESETS E COMUM ========== */
+body {
+    font-family: 'Roboto', sans-serif;
+    color: var(--text);
+    background-color: #f8f9fa;
+    overflow-x: hidden;
+}
+
+a {
+    color: var(--accent);
+    transition: all 0.2s ease;
+}
+
+a:hover {
+    color: var(--accent-light);
+    text-decoration: none;
+}
+
+/* ========== TIPOGRAFIA ========== */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    color: var(--primary);
+}
+
+.text-primary {
+    color: var(--primary) !important;
+}
+
+.text-secondary {
+    color: var(--secondary) !important;
+}
+
+.text-accent {
+    color: var(--accent) !important;
+}
+
+.bg-primary {
+    background-color: var(--primary) !important;
+}
+
+.bg-secondary {
+    background-color: var(--secondary) !important;
+}
+
+.bg-accent {
+    background-color: var(--accent) !important;
+}
+
+.bg-gradient {
+    background: var(--gradient) !important;
+}
+
+/* ========== BOTÕES ========== */
+.btn {
+    border-radius: 4px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.btn-primary:hover, .btn-primary:focus {
+    background-color: var(--primary-dark);
+    border-color: var(--primary-dark);
+    box-shadow: 0 0 0 0.2rem rgba(30, 30, 30, 0.25);
+}
+
+.btn-secondary {
+    background-color: var(--secondary);
+    border-color: var(--secondary);
+}
+
+.btn-secondary:hover, .btn-secondary:focus {
+    background-color: var(--secondary-dark);
+    border-color: var(--secondary-dark);
+    box-shadow: 0 0 0 0.2rem rgba(78, 153, 126, 0.25);
+}
+
+.btn-accent {
+    background-color: var(--accent);
+    border-color: var(--accent);
+    color: var(--light);
+}
+
+.btn-accent:hover, .btn-accent:focus {
+    background-color: var(--accent-dark);
+    border-color: var(--accent-dark);
+    color: var(--light);
+    box-shadow: 0 0 0 0.2rem rgba(5, 83, 54, 0.25);
+}
+
+.btn-outline-primary {
+    color: var(--primary);
+    border-color: var(--primary);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.btn-outline-secondary {
+    color: var(--secondary);
+    border-color: var(--secondary);
+}
+
+.btn-outline-secondary:hover {
+    background-color: var(--secondary);
+    border-color: var(--secondary);
+}
+
+.btn-outline-accent {
+    color: var(--accent);
+    border-color: var(--accent);
+}
+
+.btn-outline-accent:hover {
+    background-color: var(--accent);
+    border-color: var(--accent);
+    color: var(--light);
+}
+
+.btn-gradient {
+    background: var(--gradient);
+    color: var(--light);
+    border: none;
+}
+
+.btn-gradient:hover {
+    opacity: 0.9;
+    color: var(--light);
+}
+
+/* Botão com ícone */
+.btn-icon {
+    display: inline-flex;
+    align-items: center;
+}
+
+.btn-icon i {
+    margin-right: 5px;
+}
+
+.btn-icon-right i {
+    margin-left: 5px;
+    margin-right: 0;
+}
+
+/* ========== CARDS ========== */
+.card {
+    border: none;
+    border-radius: 8px;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow);
+}
+
+.card-header {
+    background-color: rgba(0, 0, 0, 0.03);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    font-weight: 600;
+}
+
+.card-accent {
+    border-top: 3px solid var(--accent);
+}
+
+.card-primary {
+    border-top: 3px solid var(--primary);
+}
+
+.card-secondary {
+    border-top: 3px solid var(--secondary);
+}
+
+/* ========== FORMULÁRIOS ========== */
+.form-control {
+    border-radius: 4px;
+    border: 1px solid #ced4da;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-control:focus {
+    border-color: var(--secondary);
+    box-shadow: 0 0 0 0.2rem rgba(78, 153, 126, 0.25);
+}
+
+.form-group label {
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+}
+
+.input-group-text {
+    background-color: var(--primary-light);
+    color: var(--light);
+    border: 1px solid var(--primary-light);
+}
+
+/* Checkbox personalizado */
+.custom-control-input:checked ~ .custom-control-label::before {
+    background-color: var(--secondary);
+    border-color: var(--secondary);
+}
+
+.custom-control-input:focus ~ .custom-control-label::before {
+    box-shadow: 0 0 0 0.2rem rgba(78, 153, 126, 0.25);
+}
+
+/* ========== TABELAS ========== */
+.table {
+    color: var(--text);
+}
+
+.table thead th {
+    border-bottom: 2px solid var(--secondary);
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(78, 153, 126, 0.05);
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+/* ========== NAVEGAÇÃO ========== */
+.navbar {
+    padding: 0.5rem 1rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.navbar-dark {
+    background-color: var(--primary);
+}
+
+.navbar-dark .navbar-brand {
+    color: var(--light);
+    font-weight: 700;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.navbar-dark .navbar-nav .nav-link:hover,
+.navbar-dark .navbar-nav .nav-link:focus {
+    color: var(--light);
+}
+
+.navbar-dark .navbar-nav .nav-link.active {
+    color: var(--light);
+    border-bottom: 2px solid var(--secondary);
+}
+
+/* Sidebar */
+.sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    padding: 0;
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+    background-color: var(--primary);
+    transition: all 0.3s;
+}
+
+.sidebar-sticky {
+    position: relative;
+    top: 0;
+    height: calc(100vh - 48px);
+    padding-top: .5rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.sidebar .nav-link {
+    color: rgba(255, 255, 255, 0.8);
+    padding: 0.75rem 1rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar .nav-link:hover {
+    color: var(--light);
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar .nav-link.active {
+    color: var(--light);
+    background-color: var(--accent);
+}
+
+.sidebar .nav-link i {
+    margin-right: 10px;
+    width: 20px;
+    text-align: center;
+}
+
+/* Dropdown personalizado */
+.dropdown-menu {
+    border: none;
+    box-shadow: var(--shadow);
+    border-radius: 5px;
+}
+
+.dropdown-item:hover {
+    background-color: rgba(78, 153, 126, 0.1);
+    color: var(--accent);
+}
+
+.dropdown-item.active {
+    background-color: var(--secondary);
+}
+
+/* ========== BADGES ========== */
+.badge-primary {
+    background-color: var(--primary);
+}
+
+.badge-secondary {
+    background-color: var(--secondary);
+}
+
+.badge-accent {
+    background-color: var(--accent);
+    color: var(--light);
+}
+
+/* ========== UTILITÁRIOS ========== */
+.shadow-sm {
+    box-shadow: var(--shadow-sm) !important;
+}
+
+.shadow {
+    box-shadow: var(--shadow) !important;
+}
+
+.shadow-lg {
+    box-shadow: var(--shadow-lg) !important;
+}
+
+.border-primary {
+    border-color: var(--primary) !important;
+}
+
+.border-secondary {
+    border-color: var(--secondary) !important;
+}
+
+.border-accent {
+    border-color: var(--accent) !important;
+}
+
+/* ========== ANIMAÇÕES ========== */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.5s ease forwards;
+}
+
+.animate-slide-up {
+    animation: slideUp 0.5s ease forwards;
+}
+
+.animate-pulse {
+    animation: pulse 1.5s infinite;
+}
+
+/* Delay de animação */
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
+.delay-5 { animation-delay: 0.5s; }
+
+/* ========== COMPONENTES ESPECÍFICOS ========== */
+/* Indicador Financeiro */
+.finance-card {
+    padding: 1.5rem;
+    border-radius: 8px;
+    color: var(--light);
+    position: relative;
+    overflow: hidden;
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.finance-card h3 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: inherit;
+}
+
+.finance-card .value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0;
+}
+
+.finance-card .trend {
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+}
+
+.finance-card .trend i {
+    margin-right: 5px;
+}
+
+.finance-card .trend.up {
+    color: #28a745;
+}
+
+.finance-card .trend.down {
+    color: #dc3545;
+}
+
+.finance-card .icon {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    opacity: 0.1;
+    font-size: 3rem;
+}
+
+/* Indicadores coloridos */
+.finance-card.income {
+    background: var(--gradient);
+}
+
+.finance-card.expense {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+}
+
+.finance-card.balance {
+    background: linear-gradient(135deg, #2980b9, #3498db);
+}
+
+.finance-card.savings {
+    background: linear-gradient(135deg, #16a085, #1abc9c);
+}
+
+/* Gráfico de transações */
+.transaction-chart {
+    height: 300px;
+    width: 100%;
+}
+
+/* Lista de transações */
+.transaction-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.transaction-item {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.transaction-item:last-child {
+    border-bottom: none;
+}
+
+.transaction-info {
+    display: flex;
+    align-items: center;
+}
+
+.transaction-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    color: var(--light);
+}
+
+.transaction-icon.income {
+    background-color: var(--success);
+}
+
+.transaction-icon.expense {
+    background-color: var(--danger);
+}
+
+.transaction-icon.transfer {
+    background-color: var(--info);
+}
+
+.transaction-details h5 {
+    margin-bottom: 0;
+    font-size: 0.95rem;
+}
+
+.transaction-details p {
+    margin-bottom: 0;
+    font-size: 0.8rem;
+    color: #6c757d;
+}
+
+.transaction-amount {
+    font-weight: 600;
+}
+
+.transaction-amount.income {
+    color: var(--success);
+}
+
+.transaction-amount.expense {
+    color: var(--danger);
+}
+
+/* Navegação por abas personalizada */
+.custom-tabs {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+}
+
+.custom-tabs .nav-link {
+    border: none;
+    color: #6c757d;
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    border-bottom: 3px solid transparent;
+}
+
+.custom-tabs .nav-link:hover {
+    color: var(--text);
+}
+
+.custom-tabs .nav-link.active {
+    color: var(--accent);
+    background-color: transparent;
+    border-bottom: 3px solid var(--accent);
+}
+
+/* ========== RESPONSIVIDADE ========== */
+@media (max-width: 767.98px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+    
+    .sidebar-sticky {
+        height: auto;
+    }
+    
+    .finance-card {
+        margin-bottom: 1rem;
+    }
+}
+
+@media (min-width: 768px) {
+    .sidebar {
+        width: 220px;
+    }
+    
+    .main-content {
+        margin-left: 220px;
+    }
+}
