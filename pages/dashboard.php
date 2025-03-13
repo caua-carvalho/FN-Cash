@@ -1,134 +1,18 @@
 <?php
-require "../conexao.php";
-require "../validacao_login.php";
-require "header.php"; 
+require_once "../conexao.php";
+require_once "../validacao_login.php";
+require_once "header.php";
 ?>
-
 <body>
     <div class="container-fluid">
         <div class="row">
             <!-- Sidebar -->
-            <nav class="col-md-3 col-lg-2 d-md-block sidebar">
-                <div class="sidebar-sticky">
-                    <div class="py-4 text-center">
-                        <h5 class="text-light mb-0">
-                            <i class="fas fa-wallet mr-2"></i>
-                            FinManager
-                        </h5>
-                    </div>
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="dashboard.html">
-                                <i class="fas fa-tachometer-alt"></i>
-                                Dashboard
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="transactions.html">
-                                <i class="fas fa-exchange-alt"></i>
-                                Transações
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="accounts.html">
-                                <i class="fas fa-university"></i>
-                                Contas
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="categories.html">
-                                <i class="fas fa-tags"></i>
-                                Categorias
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="budgets.html">
-                                <i class="fas fa-chart-pie"></i>
-                                Orçamentos
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="reports.html">
-                                <i class="fas fa-chart-bar"></i>
-                                Relatórios
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="goals.html">
-                                <i class="fas fa-bullseye"></i>
-                                Metas
-                            </a>
-                        </li>
-                        <li class="nav-item mt-4">
-                            <a class="nav-link" href="settings.html">
-                                <i class="fas fa-cog"></i>
-                                Configurações
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
+            <?php require_once "componentes/sidebar.php"; ?>
 
             <!-- Main Content -->
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 py-4 main-content">
                 <!-- Top Navigation -->
-                <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm mb-4 rounded">
-                    <button class="navbar-toggler d-md-none" type="button" data-toggle="collapse" data-target="#sidebarMenu">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    
-                    <div class="input-group w-25">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text bg-light border-0">
-                                <i class="fas fa-search text-muted"></i>
-                            </span>
-                        </div>
-                        <input type="text" class="form-control border-0 bg-light" placeholder="Pesquisar...">
-                    </div>
-                    
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item dropdown mr-3">
-                            <a class="nav-link" href="#" id="notificationsDropdown" role="button" data-toggle="dropdown">
-                                <i class="fas fa-bell"></i>
-                                <span class="badge badge-danger badge-pill">3</span>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="notificationsDropdown">
-                                <a class="dropdown-item" href="#">
-                                    <small class="text-muted">Há 2 minutos</small>
-                                    <p class="mb-0">Fatura do cartão de crédito vence amanhã</p>
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">
-                                    <small class="text-muted">Há 1 hora</small>
-                                    <p class="mb-0">Orçamento de Alimentação excedido</p>
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">
-                                    <small class="text-muted">Há 1 dia</small>
-                                    <p class="mb-0">Novo relatório mensal disponível</p>
-                                </a>
-                            </div>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown">
-                                <img src="https://via.placeholder.com/30" class="rounded-circle mr-2" alt="User Avatar">
-                                <span>João Silva</span>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="profile.html">
-                                    <i class="fas fa-user mr-2"></i> Perfil
-                                </a>
-                                <a class="dropdown-item" href="settings.html">
-                                    <i class="fas fa-cog mr-2"></i> Configurações
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="login.html">
-                                    <i class="fas fa-sign-out-alt mr-2"></i> Sair
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
-                </nav>
+                <?php require_once "componentes/navigation.php"; ?>
                 
                 <div class="container-fluid">
                     <!-- Page Header -->
