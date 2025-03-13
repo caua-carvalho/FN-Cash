@@ -7,9 +7,8 @@ $success = '';
 $user_input = '';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $user_input = trim($_POST['user_input'] ?? '');
+    $user_input = trim($_POST['email'] ?? '');
     $password = $_POST['password'] ?? '';
-    $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
     if (empty($user_input) || empty($password)) {
         $error = "Todos os campos são obrigatórios.";
@@ -20,10 +19,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $result = $stmt->get_result();
         $usuario = $result->fetch_assoc();
 
-        if ($usuario && password_verify($password_hash, $usuario['senha_usuario'])) { // Verifique o nome correto da coluna
+        if ($usuario && password_verify($password, $usuario['senha_usuario'])) {
             $_SESSION['id'] = $usuario['id_usuario'];
             $_SESSION['nome'] = $usuario['nm_usuario'];
-            header("Location: pages/home.php"); // Redirecionamento corrigido
+            header("Location: pages/home.php");
             exit();
         } else {
             $error = "Credenciais inválidas.";
@@ -100,6 +99,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     .register-link a:hover {
         color: var(--secondary);
     }
+    .error {
+        color: red;
+        margin-bottom: 15px;
+        text-align: center;
+        padding: 8px;
+        background-color: #ffebee;
+        border-radius: 4px;
+    }
 </style>
 
 <body>
@@ -111,13 +118,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <h2 style="text-align: center;">Login</h2>
 
         <?php if ($error): ?>
-                <div class="error"><?php echo $error; ?></div>
+            <div class="error"><?php echo $error; ?></div>
         <?php endif; ?>
 
         <form action="login.php" method="POST">
             <div class="form-group">
-                <label for="email">Email</label>
-                <input id="email" name="email" required>
+                <label for="email">Email ou Nome de Usuário</label>
+                <input type="text" id="email" name="email" value="<?php echo htmlspecialchars($user_input); ?>" required>
             </div>
             <div class="form-group">
                 <label for="password">Senha</label>
