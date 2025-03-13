@@ -222,7 +222,7 @@ h1, h2, h3, h4, h5, h6 {
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-.form-control:focus {
+.form-control:focus  {
     border-color: var(--secondary);
     box-shadow: 0 0 0 0.2rem rgba(78, 153, 126, 0.25);
 }
@@ -235,8 +235,8 @@ h1, h2, h3, h4, h5, h6 {
 
 .input-group-text {
     background-color: var(--primary-light);
-    color: var(--light);
-    border: 1px solid var(--primary-light);
+    color: var(--ligth);
+    border: 1px solid #ced4da;
 }
 
 /* Checkbox personalizado */
@@ -317,6 +317,7 @@ h1, h2, h3, h4, h5, h6 {
     padding-top: .5rem;
     overflow-x: hidden;
     overflow-y: auto;
+    height: 100vh;
 }
 
 .sidebar .nav-link {
@@ -472,11 +473,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .finance-card .trend.up {
-    color: #28a745;
+    color: var(--light);
 }
 
 .finance-card .trend.down {
-    color: #dc3545;
+    color: var(--light);
 }
 
 .finance-card .icon {
