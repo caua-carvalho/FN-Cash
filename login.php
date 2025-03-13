@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($usuario && password_verify($password, $usuario['senha_usuario'])) {
             $_SESSION['id'] = $usuario['id_usuario'];
             $_SESSION['nome'] = $usuario['nm_usuario'];
-            header("Location: pages/home.php");
+            header("Location: pages/dashboard.php");
             exit();
         } else {
             $error = "Credenciais inválidas.";
