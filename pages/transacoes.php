@@ -462,7 +462,9 @@ require_once "header.php";
                         </li>
                     </ul>
                     
+                    
                     <div class="tab-content" id="transactionTypeTabsContent">
+                        <!-- FORMS DE DESPESA -->
                         <div class="tab-pane fade show active" id="expense-form" role="tabpanel">
                             <form>
                                 <div class="form-row">
@@ -539,7 +541,7 @@ require_once "header.php";
                                 </div>
                             </form>
                         </div>
-                        
+                        <!-- FORMS DE RECEITA -->
                         <div class="tab-pane fade" id="income-form" role="tabpanel">
                             <form>
                                 <div class="form-row">
@@ -614,7 +616,7 @@ require_once "header.php";
                                 </div>
                             </form>
                         </div>
-                        
+                        <!-- FORMS DE TRANSACOES -->
                         <div class="tab-pane fade" id="transfer-form" role="tabpanel">
                             <form>
                                 <div class="form-row">
