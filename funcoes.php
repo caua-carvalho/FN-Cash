@@ -1,11 +1,14 @@
 <?php
 require "conexao.php";
 
-function cadastro_dispesa(){
-    $stmt = $conexao->prepare("SELECT id_usuario FROM usuario WHERE email_usuario = ?");
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $stmt->store_result();
+function cadastro_contas($conexao, $titulo, $valor, $data, $categoria, $forma_pagamento, $status, $observacao, $tipo, $recorrente, $comprovante) {
+    $stmt = $conexao->prepare("INSERT INTO contas (titulo, valor, data, categoria, forma_pagamento, status, observacao, tipo, recorrente, comprovante) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("sdsissssss", $titulo, $valor, $data, $categoria, $forma_pagamento, $status, $observacao, $tipo, $recorrente, $comprovante);
+    
+    $resultado = $stmt->execute();
+    $stmt->close();
+    
+    return $resultado;
 }
 
 ?>

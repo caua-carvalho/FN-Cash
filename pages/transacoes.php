@@ -2,6 +2,31 @@
 require_once "../conexao.php";
 require_once "../validacao_login.php";
 require_once "header.php";
+require_once "../funcoes.php";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST['submit_despesa'])) {
+        // Processar formulário de despesa
+        cadastro_contas(
+            $conexao,
+            $_POST["titulo"],
+            $_POST["valor"],
+            $_POST["data"],
+            $_POST["categoria"],
+            $_POST["forma_pagamento"],
+            $_POST["status"],
+            $_POST["observacao"],
+            "despesa",
+            $_POST["recorrente"],
+            $_POST["comprovante"]
+        );
+    } elseif (isset($_POST['submit_receita'])) {
+        // Processar formulário de receita
+    } elseif (isset($_POST['submit_transferencia'])) {
+        // Processar formulário de transferência
+    }
+}
+
 ?>
 <body>
     <div class="container-fluid">
@@ -434,298 +459,328 @@ require_once "header.php";
     </div>
 
     <!-- Modal Add Transaction -->
-    <div class="modal fade" id="addTransactionModal" tabindex="-1" role="dialog" aria-labelledby="addTransactionModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header bg-gradient text-white">
-                    <h5 class="modal-title" id="addTransactionModalLabel">Nova Transação</h5>
-                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <ul class="nav nav-pills nav-justified mb-4" id="transactionTypeTabs" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="expense-tab-form" data-toggle="pill" href="#expense-form" role="tab">
-                                <i class="fas fa-arrow-circle-down text-danger mr-1"></i> Despesa
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="income-tab-form" data-toggle="pill" href="#income-form" role="tab">
-                                <i class="fas fa-arrow-circle-up text-success mr-1"></i> Receita
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="transfer-tab-form" data-toggle="pill" href="#transfer-form" role="tab">
-                                <i class="fas fa-exchange-alt text-info mr-1"></i> Transferência
-                            </a>
-                        </li>
-                    </ul>
-                    
-                    
-                    <div class="tab-content" id="transactionTypeTabsContent">
-                        <!-- FORMS DE DESPESA -->
-                        <div class="tab-pane fade show active" id="expense-form" role="tabpanel">
-                            <form>
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label for="expenseDescription">Descrição</label>
-                                        <input type="text" class="form-control" id="expenseDescription" placeholder="Ex: Supermercado, Aluguel...">
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="expenseAmount">Valor</label>
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">R$</span>
-                                            </div>
-                                            <input type="text" class="form-control" id="expenseAmount" placeholder="0,00">
+<div class="modal fade" id="addTransactionModal" tabindex="-1" role="dialog" aria-labelledby="addTransactionModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-gradient text-white">
+                <h5 class="modal-title" id="addTransactionModalLabel">Nova Transação</h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ul class="nav nav-pills nav-justified mb-4" id="transactionTypeTabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="expense-tab-form" data-toggle="pill" href="#expense-form" role="tab">
+                            <i class="fas fa-arrow-circle-down text-danger mr-1"></i> Despesa
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="income-tab-form" data-toggle="pill" href="#income-form" role="tab">
+                            <i class="fas fa-arrow-circle-up text-success mr-1"></i> Receita
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="transfer-tab-form" data-toggle="pill" href="#transfer-form" role="tab">
+                            <i class="fas fa-exchange-alt text-info mr-1"></i> Transferência
+                        </a>
+                    </li>
+                </ul>
+                
+                <div class="tab-content" id="transactionTypeTabsContent">
+                    <!-- FORMS DE DESPESA -->
+                    <div class="tab-pane fade show active" id="expense-form" role="tabpanel">
+                        <form id="formDespesa" method="POST" action="transacoes.php">
+                            <!-- Campo oculto para identificar o formulário -->
+                            <input type="hidden" name="form_tipo" value="despesa">
+                            
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="titulo">Titulo</label>
+                                    <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Ex: Supermercado, Aluguel...">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="valor">Valor</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">R$</span>
                                         </div>
+                                        <input type="text" class="form-control" id="valor" name="valor" placeholder="0,00">
                                     </div>
                                 </div>
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label for="expenseDate">Data</label>
-                                        <input type="date" class="form-control" id="expenseDate">
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="expenseCategory">Categoria</label>
-                                        <select class="form-control" id="expenseCategory">
-                                            <option selected>Selecione...</option>
-                                            <option>Alimentação</option>
-                                            <option>Transporte</option>
-                                            <option>Moradia</option>
-                                            <option>Saúde</option>
-                                            <option>Educação</option>
-                                            <option>Lazer</option>
-                                            <option>Vestuário</option>
-                                            <option>Outros</option>
-                                        </select>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="data">Data</label>
+                                    <input type="date" class="form-control" id="data" name="data">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="categoria">Categoria</label>
+                                    <select class="form-control" id="categoria" name="categoria">
+                                        <option selected>Selecione...</option>
+                                        <option>Alimentação</option>
+                                        <option>Transporte</option>
+                                        <option>Moradia</option>
+                                        <option>Saúde</option>
+                                        <option>Educação</option>
+                                        <option>Lazer</option>
+                                        <option>Vestuário</option>
+                                        <option>Outros</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="forma_pagamento">Conta</label>
+                                    <select class="form-control" id="forma_pagamento" name="forma_pagamento">
+                                        <option selected>Selecione...</option>
+                                        <option>Conta Corrente</option>
+                                        <option>Poupança</option>
+                                        <option>Cartão de Crédito</option>
+                                        <option>Dinheiro</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="status">Status</label>
+                                    <select class="form-control" id="status" name="status">
+                                        <option>Pendente</option>
+                                        <option selected>Efetivada</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="observacao">Observações</label>
+                                <textarea class="form-control" id="observacao" name="observacao" rows="3" placeholder="Notas ou observações adicionais..."></textarea>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="expenseRecurring" name="recorrente" value="recorrente">
+                                        <label class="custom-control-label" for="expenseRecurring">Transação recorrente</label>
                                     </div>
                                 </div>
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label for="expenseAccount">Conta</label>
-                                        <select class="form-control" id="expenseAccount">
-                                            <option selected>Selecione...</option>
-                                            <option>Conta Corrente</option>
-                                            <option>Poupança</option>
-                                            <option>Cartão de Crédito</option>
-                                            <option>Dinheiro</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="expenseStatus">Status</label>
-                                        <select class="form-control" id="expenseStatus">
-                                            <option>Pendente</option>
-                                            <option selected>Efetivada</option>
-                                        </select>
+                                <div class="form-group col-md-6">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="expenseAttachment" name="comprovante" value="comprovante">
+                                        <label class="custom-control-label" for="expenseAttachment">Adicionar comprovante</label>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="expenseNotes">Observações</label>
-                                    <textarea class="form-control" id="expenseNotes" rows="3" placeholder="Notas ou observações adicionais..."></textarea>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="expenseRecurring">
-                                            <label class="custom-control-label" for="expenseRecurring">Transação recorrente</label>
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="expenseAttachment">
-                                            <label class="custom-control-label" for="expenseAttachment">Adicionar comprovante</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <!-- FORMS DE RECEITA -->
-                        <div class="tab-pane fade" id="income-form" role="tabpanel">
-                            <form>
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label for="incomeDescription">Descrição</label>
-                                        <input type="text" class="form-control" id="incomeDescription" placeholder="Ex: Salário, Freelance...">
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="incomeAmount">Valor</label>
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">R$</span>
-                                            </div>
-                                            <input type="text" class="form-control" id="incomeAmount" placeholder="0,00">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label for="incomeDate">Data</label>
-                                        <input type="date" class="form-control" id="incomeDate">
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="incomeCategory">Categoria</label>
-                                        <select class="form-control" id="incomeCategory">
-                                            <option selected>Selecione...</option>
-                                            <option>Salário</option>
-                                            <option>Investimentos</option>
-                                            <option>Freelance</option>
-                                            <option>Vendas</option>
-                                            <option>Bônus</option>
-                                            <option>Reembolso</option>
-                                            <option>Outros</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label for="incomeAccount">Conta</label>
-                                        <select class="form-control" id="incomeAccount">
-                                            <option selected>Selecione...</option>
-                                            <option>Conta Corrente</option>
-                                            <option>Poupança</option>
-                                            <option>Dinheiro</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="incomeStatus">Status</label>
-                                        <select class="form-control" id="incomeStatus">
-                                            <option>Pendente</option>
-                                            <option selected>Efetivada</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="incomeNotes">Observações</label>
-                                    <textarea class="form-control" id="incomeNotes" rows="3" placeholder="Notas ou observações adicionais..."></textarea>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="incomeRecurring">
-                                            <label class="custom-control-label" for="incomeRecurring">Transação recorrente</label>
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="incomeAttachment">
-                                            <label class="custom-control-label" for="incomeAttachment">Adicionar comprovante</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <!-- FORMS DE TRANSACOES -->
-                        <div class="tab-pane fade" id="transfer-form" role="tabpanel">
-                            <form>
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label for="transferDescription">Descrição</label>
-                                        <input type="text" class="form-control" id="transferDescription" placeholder="Ex: Transferência mensal...">
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="transferAmount">Valor</label>
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">R$</span>
-                                            </div>
-                                            <input type="text" class="form-control" id="transferAmount" placeholder="0,00">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-md-4">
-                                        <label for="transferDate">Data</label>
-                                        <input type="date" class="form-control" id="transferDate">
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                        <label for="transferFromAccount">Conta de Origem</label>
-                                        <select class="form-control" id="transferFromAccount">
-                                            <option selected>Selecione...</option>
-                                            <option>Conta Corrente</option>
-                                            <option>Poupança</option>
-                                            <option>Cartão de Crédito</option>
-                                            <option>Dinheiro</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                        <label for="transferToAccount">Conta de Destino</label>
-                                        <select class="form-control" id="transferToAccount">
-                                            <option selected>Selecione...</option>
-                                            <option>Conta Corrente</option>
-                                            <option>Poupança</option>
-                                            <option>Cartão de Crédito</option>
-                                            <option>Dinheiro</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label for="transferStatus">Status</label>
-                                        <select class="form-control" id="transferStatus">
-                                            <option>Pendente</option>
-                                            <option selected>Efetivada</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="transferFee">Taxa de Transferência</label>
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">R$</span>
-                                            </div>
-                                            <input type="text" class="form-control" id="transferFee" placeholder="0,00">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="transferNotes">Observações</label>
-                                    <textarea class="form-control" id="transferNotes" rows="3" placeholder="Notas ou observações adicionais..."></textarea>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="transferRecurring">
-                                            <label class="custom-control-label" for="transferRecurring">Transferência recorrente</label>
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="transferAttachment">
-                                            <label class="custom-control-label" for="transferAttachment">Adicionar comprovante</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-danger" name="submit_despesa">Salvar</button>
+                            </div>
+                        </form>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-accent">Salvar</button>
+                    
+                    <!-- FORMS DE RECEITA -->
+                    <div class="tab-pane fade" id="income-form" role="tabpanel">
+                        <form id="formReceita" method="POST" action="processar_transacao.php">
+                            <!-- Campo oculto para identificar o formulário -->
+                            <input type="hidden" name="form_tipo" value="receita">
+                            
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="incomeDescription">Descrição</label>
+                                    <input type="text" class="form-control" id="incomeDescription" name="descricao" placeholder="Ex: Salário, Freelance...">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="incomeAmount">Valor</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">R$</span>
+                                        </div>
+                                        <input type="text" class="form-control" id="incomeAmount" name="valor" placeholder="0,00">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="incomeDate">Data</label>
+                                    <input type="date" class="form-control" id="incomeDate" name="data">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="incomeCategory">Categoria</label>
+                                    <select class="form-control" id="incomeCategory" name="categoria">
+                                        <option selected>Selecione...</option>
+                                        <option>Salário</option>
+                                        <option>Investimentos</option>
+                                        <option>Freelance</option>
+                                        <option>Vendas</option>
+                                        <option>Bônus</option>
+                                        <option>Reembolso</option>
+                                        <option>Outros</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="incomeAccount">Conta</label>
+                                    <select class="form-control" id="incomeAccount" name="conta">
+                                        <option selected>Selecione...</option>
+                                        <option>Conta Corrente</option>
+                                        <option>Poupança</option>
+                                        <option>Dinheiro</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="incomeStatus">Status</label>
+                                    <select class="form-control" id="incomeStatus" name="status">
+                                        <option>Pendente</option>
+                                        <option selected>Efetivada</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="incomeNotes">Observações</label>
+                                <textarea class="form-control" id="incomeNotes" name="observacoes" rows="3" placeholder="Notas ou observações adicionais..."></textarea>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="incomeRecurring" name="recorrente">
+                                        <label class="custom-control-label" for="incomeRecurring">Transação recorrente</label>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="incomeAttachment" name="comprovante">
+                                        <label class="custom-control-label" for="incomeAttachment">Adicionar comprovante</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-success">Salvar</button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <!-- FORMS DE TRANSACOES -->
+                    <div class="tab-pane fade" id="transfer-form" role="tabpanel">
+                        <form id="formTransferencia" method="POST" action="processar_transacao.php">
+                            <!-- Campo oculto para identificar o formulário -->
+                            <input type="hidden" name="form_tipo" value="transferencia">
+                            
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="transferDescription">Descrição</label>
+                                    <input type="text" class="form-control" id="transferDescription" name="descricao" placeholder="Ex: Transferência mensal...">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="transferAmount">Valor</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">R$</span>
+                                        </div>
+                                        <input type="text" class="form-control" id="transferAmount" name="valor" placeholder="0,00">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label for="transferDate">Data</label>
+                                    <input type="date" class="form-control" id="transferDate" name="data">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="transferFromAccount">Conta de Origem</label>
+                                    <select class="form-control" id="transferFromAccount" name="contaOrigem">
+                                        <option selected>Selecione...</option>
+                                        <option>Conta Corrente</option>
+                                        <option>Poupança</option>
+                                        <option>Cartão de Crédito</option>
+                                        <option>Dinheiro</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="transferToAccount">Conta de Destino</label>
+                                    <select class="form-control" id="transferToAccount" name="contaDestino">
+                                        <option selected>Selecione...</option>
+                                        <option>Conta Corrente</option>
+                                        <option>Poupança</option>
+                                        <option>Cartão de Crédito</option>
+                                        <option>Dinheiro</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="transferStatus">Status</label>
+                                    <select class="form-control" id="transferStatus" name="status">
+                                        <option>Pendente</option>
+                                        <option selected>Efetivada</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="transferFee">Taxa de Transferência</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">R$</span>
+                                        </div>
+                                        <input type="text" class="form-control" id="transferFee" name="taxa" placeholder="0,00">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="transferNotes">Observações</label>
+                                <textarea class="form-control" id="transferNotes" name="observacoes" rows="3" placeholder="Notas ou observações adicionais..."></textarea>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="transferRecurring" name="recorrente">
+                                        <label class="custom-control-label" for="transferRecurring">Transferência recorrente</label>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="transferAttachment" name="comprovante">
+                                        <label class="custom-control-label" for="transferAttachment">Adicionar comprovante</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-info">Salvar</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Bootstrap & jQuery JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Bootstrap & jQuery JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Custom JS -->
+<script>
+    // Inicializa tooltips
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
     
-    <!-- Custom JS -->
-    <script>
-        // Inicializa tooltips
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip();
-        });
-        
-        // Script para toggling sidebar em dispositivos móveis
-        document.addEventListener('DOMContentLoaded', function() {
-            const sidebarToggle = document.querySelector('.navbar-toggler');
+    // Script para toggling sidebar em dispositivos móveis
+    document.addEventListener('DOMContentLoaded', function() {
+        const sidebarToggle = document.querySelector('.navbar-toggler');
+        if (sidebarToggle) {
             sidebarToggle.addEventListener('click', function() {
                 document.querySelector('.sidebar').classList.toggle('show');
             });
+        }
+        
+        // Formatar campos de valor para formato monetário
+        const camposValor = document.querySelectorAll('#valor, #incomeAmount, #transferAmount, #transferFee');
+        camposValor.forEach(function(campo) {
+            campo.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                value = (value / 100).toFixed(2).replace('.', ',');
+                e.target.value = value;
+            });
         });
-    </script>
+    });
+</script>
 </body>
 </html>

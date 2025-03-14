@@ -13,8 +13,8 @@ create table usuario (
 create table contas (
 	id_conta int primary key auto_increment,
     titulo varchar(250),
-    tipo varchar(250), --dispesas, receita, transacoes
-    instituicao varchar(250), --qual banco esta alocada a conta
+    tipo varchar(250), -- dispesas, receita, transacoes
+    instituicao varchar(250), -- qual banco esta alocada a conta
     valor double(8,2),
     descricao MEDIUMTEXT,
     categoria int(2)
