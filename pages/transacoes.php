@@ -541,13 +541,160 @@ require_once "header.php";
                         </div>
                         
                         <div class="tab-pane fade" id="income-form" role="tabpanel">
-                            <!-- Formulário de Receita (similar ao de Despesa) -->
-                            <p class="text-muted text-center py-5">Formulário para adicionar uma nova receita.</p>
+                            <form>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="incomeDescription">Descrição</label>
+                                        <input type="text" class="form-control" id="incomeDescription" placeholder="Ex: Salário, Freelance...">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="incomeAmount">Valor</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">R$</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="incomeAmount" placeholder="0,00">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="incomeDate">Data</label>
+                                        <input type="date" class="form-control" id="incomeDate">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="incomeCategory">Categoria</label>
+                                        <select class="form-control" id="incomeCategory">
+                                            <option selected>Selecione...</option>
+                                            <option>Salário</option>
+                                            <option>Investimentos</option>
+                                            <option>Freelance</option>
+                                            <option>Vendas</option>
+                                            <option>Bônus</option>
+                                            <option>Reembolso</option>
+                                            <option>Outros</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="incomeAccount">Conta</label>
+                                        <select class="form-control" id="incomeAccount">
+                                            <option selected>Selecione...</option>
+                                            <option>Conta Corrente</option>
+                                            <option>Poupança</option>
+                                            <option>Dinheiro</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="incomeStatus">Status</label>
+                                        <select class="form-control" id="incomeStatus">
+                                            <option>Pendente</option>
+                                            <option selected>Efetivada</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="incomeNotes">Observações</label>
+                                    <textarea class="form-control" id="incomeNotes" rows="3" placeholder="Notas ou observações adicionais..."></textarea>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="incomeRecurring">
+                                            <label class="custom-control-label" for="incomeRecurring">Transação recorrente</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="incomeAttachment">
+                                            <label class="custom-control-label" for="incomeAttachment">Adicionar comprovante</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                         
                         <div class="tab-pane fade" id="transfer-form" role="tabpanel">
-                            <!-- Formulário de Transferência -->
-                            <p class="text-muted text-center py-5">Formulário para adicionar uma transferência entre contas.</p>
+                            <form>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="transferDescription">Descrição</label>
+                                        <input type="text" class="form-control" id="transferDescription" placeholder="Ex: Transferência mensal...">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="transferAmount">Valor</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">R$</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="transferAmount" placeholder="0,00">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label for="transferDate">Data</label>
+                                        <input type="date" class="form-control" id="transferDate">
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="transferFromAccount">Conta de Origem</label>
+                                        <select class="form-control" id="transferFromAccount">
+                                            <option selected>Selecione...</option>
+                                            <option>Conta Corrente</option>
+                                            <option>Poupança</option>
+                                            <option>Cartão de Crédito</option>
+                                            <option>Dinheiro</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="transferToAccount">Conta de Destino</label>
+                                        <select class="form-control" id="transferToAccount">
+                                            <option selected>Selecione...</option>
+                                            <option>Conta Corrente</option>
+                                            <option>Poupança</option>
+                                            <option>Cartão de Crédito</option>
+                                            <option>Dinheiro</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="transferStatus">Status</label>
+                                        <select class="form-control" id="transferStatus">
+                                            <option>Pendente</option>
+                                            <option selected>Efetivada</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="transferFee">Taxa de Transferência</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">R$</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="transferFee" placeholder="0,00">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="transferNotes">Observações</label>
+                                    <textarea class="form-control" id="transferNotes" rows="3" placeholder="Notas ou observações adicionais..."></textarea>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="transferRecurring">
+                                            <label class="custom-control-label" for="transferRecurring">Transferência recorrente</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="transferAttachment">
+                                            <label class="custom-control-label" for="transferAttachment">Adicionar comprovante</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
