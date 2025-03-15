@@ -20,6 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_POST["recorrente"],
             $_POST["comprovante"]
         );
+        header("Location: transacoes.php?sucesso");
     } elseif (isset($_POST['submit_receita'])) {
         // Processar formulário de receita
     } elseif (isset($_POST['submit_transferencia'])) {
