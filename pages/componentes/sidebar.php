@@ -45,7 +45,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="goals.html">
+                <a class="nav-link" href="metas.php">
                     <i class="fas fa-bullseye"></i>
                     Metas
                 </a>
