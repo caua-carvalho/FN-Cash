@@ -517,15 +517,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <div class="form-group col-md-6">
                                     <label for="categoria">Categoria</label>
                                     <select class="form-control" id="categoria" name="categoria">
-                                        <option selected>Selecione...</option>
-                                        <option>Alimentação</option>
-                                        <option>Transporte</option>
-                                        <option>Moradia</option>
-                                        <option>Saúde</option>
-                                        <option>Educação</option>
-                                        <option>Lazer</option>
-                                        <option>Vestuário</option>
-                                        <option>Outros</option>
+                                        <option value="">Selecione...</option>
+                                        <option value="alimentacao">Alimentação</option>
+                                        <option value="transporte">Transporte</option>
+                                        <option value="moradia">Moradia</option>
+                                        <option value="saude">Saúde</option>
+                                        <option value="educacao">Educação</option>
+                                        <option value="lazer">Lazer</option>
+                                        <option value="vestuario">Vestuário</option>
+                                        <option value="outros">Outros</option>
                                     </select>
                                 </div>
                             </div>
@@ -603,7 +603,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <label for="incomeCategory">Categoria</label>
                                     <select class="form-control" id="incomeCategory" name="categoria">
                                         <option selected>Selecione...</option>
-                                        <option>Salário</option>
+                                        <option value="salario">Salário</option>
                                         <option>Investimentos</option>
                                         <option>Freelance</option>
                                         <option>Vendas</option>
