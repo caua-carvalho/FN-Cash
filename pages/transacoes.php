@@ -84,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <div class="card-body">
                                     <h5 class="text-success mb-1">Receitas</h5>
                                     <h3 class="mb-0">
-                                    <?php exibir_conta("despesa"); ?>
+                                    <?php exibir_conta("receita"); ?>
                                     </h3>
                                 </div>
                             </div>
@@ -94,7 +94,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <div class="card-body">
                                     <h5 class="text-danger mb-1">Despesas</h5>
                                     <h3 class="mb-0">
-                                    <?php exibir_conta("receita"); ?>
+                                    <?php exibir_conta("despesa"); ?>
                                     </h3>
                                 </div>
                             </div>
@@ -245,31 +245,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>13/03/2025</td>
-                                                    <td>Supermercado Extra</td>
-                                                    <td>
-                                                        <span class="badge badge-light">Alimentação</span>
-                                                    </td>
-                                                    <td>Cartão de Crédito</td>
-                                                    <td class="text-danger">- R$ 152,35</td>
-                                                    <td>
-                                                        <span class="badge badge-success">Efetivada</span>
-                                                    </td>
-                                                    <td>
-                                                        <div class="btn-group btn-group-sm">
-                                                            <button type="button" class="btn btn-outline-secondary" data-toggle="tooltip" title="Editar">
-                                                                <i class="fas fa-edit"></i>
-                                                            </button>
-                                                            <button type="button" class="btn btn-outline-secondary" data-toggle="tooltip" title="Duplicar">
-                                                                <i class="fas fa-copy"></i>
-                                                            </button>
-                                                            <button type="button" class="btn btn-outline-danger" data-toggle="tooltip" title="Excluir">
-                                                                <i class="fas fa-trash"></i>
-                                                            </button>
-                                                        </div>
-                                                    </td>
-                                                </tr>
+                                                <?php transacoes("todas"); ?>
                                             </tbody>
                                         </table>
                                     </div>
@@ -278,13 +254,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <nav aria-label="Page navigation" class="mt-3">
                                         <ul class="pagination justify-content-center">
                                             <li class="page-item disabled">
-                                                <a class="page-link" href="#" tabindex="-1">Anterior</a>
+                                                <a class="page-link text-accent" href="#" tabindex="-1">Anterior</a>
                                             </li>
-                                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                            <li class="page-item"><a class="page-link btn-accent" href="#">1</a></li>
+                                            <li class="page-item"><a class="page-link text-accent" href="#">2</a></li>
+                                            <li class="page-item"><a class="page-link text-accent" href="#">3</a></li>
                                             <li class="page-item">
-                                                <a class="page-link" href="#">Próximo</a>
+                                                <a class="page-link text-accent" href="#">Próximo</a>
                                             </li>
                                         </ul>
                                     </nav>
@@ -292,17 +268,68 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 
                                 <div class="tab-pane fade" id="income" role="tabpanel">
                                     <!-- Conteúdo da aba Receitas -->
-                                    <p class="text-center text-muted py-5">Selecione o filtro "Receitas" para visualizar apenas transações de entrada.</p>
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Data</th>
+                                                    <th>Descrição</th>
+                                                    <th>Categoria</th>
+                                                    <th>Conta</th>
+                                                    <th>Valor</th>
+                                                    <th>Status</th>
+                                                    <th>Ações</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php transacoes("receita"); ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                                 
                                 <div class="tab-pane fade" id="expense" role="tabpanel">
-                                    <!-- Conteúdo da aba Despesas -->
-                                    <p class="text-center text-muted py-5">Selecione o filtro "Despesas" para visualizar apenas transações de saída.</p>
+                                    <!-- Conteúdo da aba Receitas -->
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Data</th>
+                                                    <th>Descrição</th>
+                                                    <th>Categoria</th>
+                                                    <th>Conta</th>
+                                                    <th>Valor</th>
+                                                    <th>Status</th>
+                                                    <th>Ações</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php transacoes("despesa"); ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                                 
                                 <div class="tab-pane fade" id="transfer" role="tabpanel">
-                                    <!-- Conteúdo da aba Transferências -->
-                                    <p class="text-center text-muted py-5">Selecione o filtro "Transferências" para visualizar apenas movimentações entre contas.</p>
+                                    <!-- Conteúdo da aba Receitas -->
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Data</th>
+                                                    <th>Descrição</th>
+                                                    <th>Categoria</th>
+                                                    <th>Conta</th>
+                                                    <th>Valor</th>
+                                                    <th>Status</th>
+                                                    <th>Ações</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php transacoes("transferP"); ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>

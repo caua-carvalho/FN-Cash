@@ -115,7 +115,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-accent {
-    background-color: var(--accent);
+    background-color: var(--accent) !important;
     border-color: var(--accent);
     color: var(--light);
 }
