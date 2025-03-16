@@ -23,8 +23,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header("Location: transacoes.php?sucesso");
     } elseif (isset($_POST['submit_receita'])) {
         // Processar formulário de receita
+        cadastro_contas(
+            $conexao,
+            $_POST["titulo"],
+            $_POST["valor"],
+            $_POST["data"],
+            $_POST["categoria"],
+            $_POST["forma_pagamento"],
+            $_POST["status"],
+            $_POST["observacao"],
+            "receita",
+            $_POST["recorrente"],
+            $_POST["comprovante"]
+        );
     } elseif (isset($_POST['submit_transferencia'])) {
         // Processar formulário de transferência
+        cadastro_contas(
+            $conexao,
+            $_POST["titulo"],
+            $_POST["valor"],
+            $_POST["data"],
+            $_POST["categoria"],
+            $_POST["forma_pagamento"],
+            $_POST["status"],
+            $_POST["observacao"],
+            "transacoes",
+            $_POST["recorrente"],
+            $_POST["comprovante"]
+        );
     }
 }
 
@@ -50,8 +76,42 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </button>
                         </div>
                     </div>
+
+                    <!-- CARDS COM TOTAL DE CADA TIPO DE CONTA -->
+                    <div class="row mb-4">
+                        <div class="col-md-4 mb-3 mb-md-0">
+                            <div class="card shadow-sm text-center fade-in-up">
+                                <div class="card-body">
+                                    <h5 class="text-success mb-1">Receitas</h5>
+                                    <h3 class="mb-0">
+                                    <?php exibir_conta("despesa"); ?>
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3 mb-md-0">
+                            <div class="card shadow-sm text-center fade-in-up delay-200">
+                                <div class="card-body">
+                                    <h5 class="text-danger mb-1">Despesas</h5>
+                                    <h3 class="mb-0">
+                                    <?php exibir_conta("receita"); ?>
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card shadow-sm text-center fade-in-up delay-300">
+                                <div class="card-body">
+                                    <h5 class="text-info mb-1">Saldo</h5>
+                                    <h3 class="mb-0">
+                                    <?php exibir_conta("transacoes"); ?>
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     
-                    <!-- Filters Card -->
+                    <!-- FILTROS -->
                     <div class="card shadow-sm mb-4 fade-in-up">
                         <div class="card-body">
                             <div class="row">
@@ -140,35 +200,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                     </div>
                     
-                    <!-- Transaction Summary Cards -->
-                    <div class="row mb-4">
-                        <div class="col-md-4 mb-3 mb-md-0">
-                            <div class="card shadow-sm text-center fade-in-up">
-                                <div class="card-body">
-                                    <h5 class="text-success mb-1">Receitas</h5>
-                                    <h3 class="mb-0">R$ 8.549,32</h3>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 mb-3 mb-md-0">
-                            <div class="card shadow-sm text-center fade-in-up delay-200">
-                                <div class="card-body">
-                                    <h5 class="text-danger mb-1">Despesas</h5>
-                                    <h3 class="mb-0">R$ 5.238,17</h3>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card shadow-sm text-center fade-in-up delay-300">
-                                <div class="card-body">
-                                    <h5 class="text-info mb-1">Saldo</h5>
-                                    <h3 class="mb-0">R$ 3.311,15</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Transactions Table -->
+                    <!-- TRANSACOES -->
                     <div class="card shadow-sm mb-4 fade-in-up">
                         <div class="card-body">
                             <ul class="nav nav-tabs custom-tabs mb-3" id="transactionTabs" role="tablist">
@@ -195,7 +227,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     </div>
                                 </li>
                             </ul>
-                            
+
+                            <!-- TABELA DE TRANSACOES -->
                             <div class="tab-content" id="transactionTabsContent">
                                 <div class="tab-pane fade show active" id="all" role="tabpanel">
                                     <div class="table-responsive">
@@ -220,181 +253,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                     </td>
                                                     <td>Cartão de Crédito</td>
                                                     <td class="text-danger">- R$ 152,35</td>
-                                                    <td>
-                                                        <span class="badge badge-success">Efetivada</span>
-                                                    </td>
-                                                    <td>
-                                                        <div class="btn-group btn-group-sm">
-                                                            <button type="button" class="btn btn-outline-secondary" data-toggle="tooltip" title="Editar">
-                                                                <i class="fas fa-edit"></i>
-                                                            </button>
-                                                            <button type="button" class="btn btn-outline-secondary" data-toggle="tooltip" title="Duplicar">
-                                                                <i class="fas fa-copy"></i>
-                                                            </button>
-                                                            <button type="button" class="btn btn-outline-danger" data-toggle="tooltip" title="Excluir">
-                                                                <i class="fas fa-trash"></i>
-                                                            </button>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>12/03/2025</td>
-                                                    <td>Restaurante Sabor & Arte</td>
-                                                    <td>
-                                                        <span class="badge badge-light">Alimentação</span>
-                                                    </td>
-                                                    <td>Cartão de Crédito</td>
-                                                    <td class="text-danger">- R$ 75,90</td>
-                                                    <td>
-                                                        <span class="badge badge-success">Efetivada</span>
-                                                    </td>
-                                                    <td>
-                                                        <div class="btn-group btn-group-sm">
-                                                            <button type="button" class="btn btn-outline-secondary" data-toggle="tooltip" title="Editar">
-                                                                <i class="fas fa-edit"></i>
-                                                            </button>
-                                                            <button type="button" class="btn btn-outline-secondary" data-toggle="tooltip" title="Duplicar">
-                                                                <i class="fas fa-copy"></i>
-                                                            </button>
-                                                            <button type="button" class="btn btn-outline-danger" data-toggle="tooltip" title="Excluir">
-                                                                <i class="fas fa-trash"></i>
-                                                            </button>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>12/03/2025</td>
-                                                    <td>Salário Empresa XYZ</td>
-                                                    <td>
-                                                        <span class="badge badge-light">Salário</span>
-                                                    </td>
-                                                    <td>Conta Corrente</td>
-                                                    <td class="text-success">+ R$ 4.500,00</td>
-                                                    <td>
-                                                        <span class="badge badge-success">Efetivada</span>
-                                                    </td>
-                                                    <td>
-                                                        <div class="btn-group btn-group-sm">
-                                                            <button type="button" class="btn btn-outline-secondary" data-toggle="tooltip" title="Editar">
-                                                                <i class="fas fa-edit"></i>
-                                                            </button>
-                                                            <button type="button" class="btn btn-outline-secondary" data-toggle="tooltip" title="Duplicar">
-                                                                <i class="fas fa-copy"></i>
-                                                            </button>
-                                                            <button type="button" class="btn btn-outline-danger" data-toggle="tooltip" title="Excluir">
-                                                                <i class="fas fa-trash"></i>
-                                                            </button>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>10/03/2025</td>
-                                                    <td>Conta de Luz - ENEL</td>
-                                                    <td>
-                                                        <span class="badge badge-light">Moradia</span>
-                                                    </td>
-                                                    <td>Conta Corrente</td>
-                                                    <td class="text-danger">- R$ 187,32</td>
-                                                    <td>
-                                                        <span class="badge badge-success">Efetivada</span>
-                                                    </td>
-                                                    <td>
-                                                        <div class="btn-group btn-group-sm">
-                                                            <button type="button" class="btn btn-outline-secondary" data-toggle="tooltip" title="Editar">
-                                                                <i class="fas fa-edit"></i>
-                                                            </button>
-                                                            <button type="button" class="btn btn-outline-secondary" data-toggle="tooltip" title="Duplicar">
-                                                                <i class="fas fa-copy"></i>
-                                                            </button>
-                                                            <button type="button" class="btn btn-outline-danger" data-toggle="tooltip" title="Excluir">
-                                                                <i class="fas fa-trash"></i>
-                                                            </button>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>08/03/2025</td>
-                                                    <td>Conta de Água - SABESP</td>
-                                                    <td>
-                                                        <span class="badge badge-light">Moradia</span>
-                                                    </td>
-                                                    <td>Conta Corrente</td>
-                                                    <td class="text-danger">- R$ 95,47</td>
-                                                    <td>
-                                                        <span class="badge badge-success">Efetivada</span>
-                                                    </td>
-                                                    <td>
-                                                        <div class="btn-group btn-group-sm">
-                                                            <button type="button" class="btn btn-outline-secondary" data-toggle="tooltip" title="Editar">
-                                                                <i class="fas fa-edit"></i>
-                                                            </button>
-                                                            <button type="button" class="btn btn-outline-secondary" data-toggle="tooltip" title="Duplicar">
-                                                                <i class="fas fa-copy"></i>
-                                                            </button>
-                                                            <button type="button" class="btn btn-outline-danger" data-toggle="tooltip" title="Excluir">
-                                                                <i class="fas fa-trash"></i>
-                                                            </button>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>05/03/2025</td>
-                                                    <td>Internet - Vivo Fibra</td>
-                                                    <td>
-                                                        <span class="badge badge-light">Moradia</span>
-                                                    </td>
-                                                    <td>Conta Corrente</td>
-                                                    <td class="text-danger">- R$ 120,00</td>
-                                                    <td>
-                                                        <span class="badge badge-success">Efetivada</span>
-                                                    </td>
-                                                    <td>
-                                                        <div class="btn-group btn-group-sm">
-                                                            <button type="button" class="btn btn-outline-secondary" data-toggle="tooltip" title="Editar">
-                                                                <i class="fas fa-edit"></i>
-                                                            </button>
-                                                            <button type="button" class="btn btn-outline-secondary" data-toggle="tooltip" title="Duplicar">
-                                                                <i class="fas fa-copy"></i>
-                                                            </button>
-                                                            <button type="button" class="btn btn-outline-danger" data-toggle="tooltip" title="Excluir">
-                                                                <i class="fas fa-trash"></i>
-                                                            </button>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>03/03/2025</td>
-                                                    <td>Academia Smart Fit</td>
-                                                    <td>
-                                                        <span class="badge badge-light">Saúde</span>
-                                                    </td>
-                                                    <td>Cartão de Crédito</td>
-                                                    <td class="text-danger">- R$ 99,90</td>
-                                                    <td>
-                                                        <span class="badge badge-success">Efetivada</span>
-                                                    </td>
-                                                    <td>
-                                                        <div class="btn-group btn-group-sm">
-                                                            <button type="button" class="btn btn-outline-secondary" data-toggle="tooltip" title="Editar">
-                                                                <i class="fas fa-edit"></i>
-                                                            </button>
-                                                            <button type="button" class="btn btn-outline-secondary" data-toggle="tooltip" title="Duplicar">
-                                                                <i class="fas fa-copy"></i>
-                                                            </button>
-                                                            <button type="button" class="btn btn-outline-danger" data-toggle="tooltip" title="Excluir">
-                                                                <i class="fas fa-trash"></i>
-                                                            </button>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>01/03/2025</td>
-                                                    <td>Aluguel Apartamento</td>
-                                                    <td>
-                                                        <span class="badge badge-light">Moradia</span>
-                                                    </td>
-                                                    <td>Conta Corrente</td>
-                                                    <td class="text-danger">- R$ 1.500,00</td>
                                                     <td>
                                                         <span class="badge badge-success">Efetivada</span>
                                                     </td>
@@ -449,10 +307,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </div>
                         </div>
                     </div>
+                    
                 </div>
                 
+                <!-- FOOTER -->
                 <footer class="mt-5 text-center text-muted">
-                    <p class="mb-1">&copy; 2025 FinManager. Todos os direitos reservados.</p>
+                    <p class="mb-1">&copy; 2025 FN-CASH. Todos os direitos reservados.</p>
                     <p class="mb-0">v1.0.0</p>
                 </footer>
             </main>
@@ -521,6 +381,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <option value="">Selecione...</option>
                                         <option value="alimentacao">Alimentação</option>
                                         <option value="transporte">Transporte</option>
+                                        
                                         <option value="moradia">Moradia</option>
                                         <option value="saude">Saúde</option>
                                         <option value="educacao">Educação</option>
@@ -556,13 +417,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="expenseRecurring" name="recorrente" value="recorrente">
+                                        <input type="checkbox" class="custom-control-input" id="expenseRecurring" name="recorrente" value="sim">
                                         <label class="custom-control-label" for="expenseRecurring">Transação recorrente</label>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="expenseAttachment" name="comprovante" value="comprovante">
+                                        <input type="checkbox" class="custom-control-input" id="expenseAttachment" name="comprovante" value="sim">
                                         <label class="custom-control-label" for="expenseAttachment">Adicionar comprovante</label>
                                     </div>
                                 </div>
@@ -576,48 +437,48 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     
                     <!-- FORMS DE RECEITA -->
                     <div class="tab-pane fade" id="income-form" role="tabpanel">
-                        <form id="formReceita" method="POST" action="processar_transacao.php">
+                        <form id="formReceita" method="POST" action="transacoes.php">
                             <!-- Campo oculto para identificar o formulário -->
                             <input type="hidden" name="form_tipo" value="receita">
                             
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label for="incomeDescription">Descrição</label>
-                                    <input type="text" class="form-control" id="incomeDescription" name="descricao" placeholder="Ex: Salário, Freelance...">
+                                    <label for="titulo_receita">Descrição</label>
+                                    <input type="text" class="form-control" id="titulo_receita" name="titulo" placeholder="Ex: Salário, Freelance...">
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="incomeAmount">Valor</label>
+                                    <label for="valor_receita">Valor</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">R$</span>
                                         </div>
-                                        <input type="text" class="form-control" id="incomeAmount" name="valor" placeholder="0,00">
+                                        <input type="text" class="form-control" id="valor_receita" name="valor" placeholder="0,00">
                                     </div>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label for="incomeDate">Data</label>
-                                    <input type="date" class="form-control" id="incomeDate" name="data">
+                                    <label for="data_receita">Data</label>
+                                    <input type="date" class="form-control" id="data_receita" name="data">
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="incomeCategory">Categoria</label>
-                                    <select class="form-control" id="incomeCategory" name="categoria">
+                                    <label for="categoria_receita">Categoria</label>
+                                    <select class="form-control" id="categoria_receita" name="categoria">
                                         <option selected>Selecione...</option>
                                         <option value="salario">Salário</option>
-                                        <option>Investimentos</option>
-                                        <option>Freelance</option>
-                                        <option>Vendas</option>
-                                        <option>Bônus</option>
-                                        <option>Reembolso</option>
-                                        <option>Outros</option>
+                                        <option value="investimentos">Investimentos</option>
+                                        <option value="freelance">Freelance</option>
+                                        <option value="vendas">Vendas</option>
+                                        <option value="bonus">Bônus</option>
+                                        <option value="reembolso">Reembolso</option>
+                                        <option value="outros">Outros</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label for="incomeAccount">Conta</label>
-                                    <select class="form-control" id="incomeAccount" name="conta">
+                                    <label for="forma_pagamento_receita">Conta</label>
+                                    <select class="form-control" id="forma_pagamento_receita" name="forma_pagamento">
                                         <option selected>Selecione...</option>
                                         <option>Conta Corrente</option>
                                         <option>Poupança</option>
@@ -625,67 +486,67 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     </select>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="incomeStatus">Status</label>
-                                    <select class="form-control" id="incomeStatus" name="status">
+                                    <label for="status_receita">Status</label>
+                                    <select class="form-control" id="status_receita" name="status">
                                         <option>Pendente</option>
                                         <option selected>Efetivada</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="incomeNotes">Observações</label>
-                                <textarea class="form-control" id="incomeNotes" name="observacoes" rows="3" placeholder="Notas ou observações adicionais..."></textarea>
+                                <label for="observacao_receita">Observações</label>
+                                <textarea class="form-control" id="observacao_receita" name="observacao" rows="3" placeholder="Notas ou observações adicionais..."></textarea>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="incomeRecurring" name="recorrente">
+                                        <input type="checkbox" class="custom-control-input" id="incomeRecurring" name="recorrente" value="sim">
                                         <label class="custom-control-label" for="incomeRecurring">Transação recorrente</label>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="incomeAttachment" name="comprovante">
+                                        <input type="checkbox" class="custom-control-input" id="incomeAttachment" name="comprovante" value="sim">
                                         <label class="custom-control-label" for="incomeAttachment">Adicionar comprovante</label>
                                     </div>
                                 </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
-                                <button type="submit" class="btn btn-success">Salvar</button>
+                                <button type="submit" class="btn btn-success" name="submit_receita">Salvar</button>
                             </div>
                         </form>
                     </div>
                     
-                    <!-- FORMS DE TRANSACOES -->
+                    <!-- FORMS DE TRANSFERÊNCIA -->
                     <div class="tab-pane fade" id="transfer-form" role="tabpanel">
-                        <form id="formTransferencia" method="POST" action="processar_transacao.php">
+                        <form id="formTransferencia" method="POST" action="transacoes.php">
                             <!-- Campo oculto para identificar o formulário -->
                             <input type="hidden" name="form_tipo" value="transferencia">
                             
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label for="transferDescription">Descrição</label>
-                                    <input type="text" class="form-control" id="transferDescription" name="descricao" placeholder="Ex: Transferência mensal...">
+                                    <label for="titulo_transferencia">Descrição</label>
+                                    <input type="text" class="form-control" id="titulo_transferencia" name="titulo" placeholder="Ex: Transferência mensal...">
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="transferAmount">Valor</label>
+                                    <label for="valor_transferencia">Valor</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">R$</span>
                                         </div>
-                                        <input type="text" class="form-control" id="transferAmount" name="valor" placeholder="0,00">
+                                        <input type="text" class="form-control" id="valor_transferencia" name="valor" placeholder="0,00">
                                     </div>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-4">
-                                    <label for="transferDate">Data</label>
-                                    <input type="date" class="form-control" id="transferDate" name="data">
+                                    <label for="data_transferencia">Data</label>
+                                    <input type="date" class="form-control" id="data_transferencia" name="data">
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label for="transferFromAccount">Conta de Origem</label>
-                                    <select class="form-control" id="transferFromAccount" name="contaOrigem">
+                                    <label for="forma_pagamento_origem">Conta de Origem</label>
+                                    <select class="form-control" id="forma_pagamento_origem" name="forma_pagamento">
                                         <option selected>Selecione...</option>
                                         <option>Conta Corrente</option>
                                         <option>Poupança</option>
@@ -694,55 +555,54 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     </select>
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label for="transferToAccount">Conta de Destino</label>
-                                    <select class="form-control" id="transferToAccount" name="contaDestino">
-                                        <option selected>Selecione...</option>
-                                        <option>Conta Corrente</option>
-                                        <option>Poupança</option>
-                                        <option>Cartão de Crédito</option>
-                                        <option>Dinheiro</option>
+                                    <label for="categoria_transferencia">Categoria</label>
+                                    <select class="form-control" id="categoria_transferencia" name="categoria">
+                                        <option selected>Transferência</option>
+                                        <option>Transferência entre Contas</option>
+                                        <option>Pagamento de Cartão</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label for="transferStatus">Status</label>
-                                    <select class="form-control" id="transferStatus" name="status">
+                                    <label for="status_transferencia">Status</label>
+                                    <select class="form-control" id="status_transferencia" name="status">
                                         <option>Pendente</option>
                                         <option selected>Efetivada</option>
                                     </select>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="transferFee">Taxa de Transferência</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">R$</span>
-                                        </div>
-                                        <input type="text" class="form-control" id="transferFee" name="taxa" placeholder="0,00">
-                                    </div>
+                                    <label for="conta_destino">Conta de Destino</label>
+                                    <select class="form-control" id="conta_destino" name="conta_destino">
+                                        <option selected>Selecione...</option>
+                                        <option>Conta Corrente</option>
+                                        <option>Poupança</option>
+                                        <option>Cartão de Crédito</option>
+                                        <option>Dinheiro</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="transferNotes">Observações</label>
-                                <textarea class="form-control" id="transferNotes" name="observacoes" rows="3" placeholder="Notas ou observações adicionais..."></textarea>
+                                <label for="observacao_transferencia">Observações</label>
+                                <textarea class="form-control" id="observacao_transferencia" name="observacao" rows="3" placeholder="Notas ou observações adicionais..."></textarea>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="transferRecurring" name="recorrente">
+                                        <input type="checkbox" class="custom-control-input" id="transferRecurring" name="recorrente" value="sim">
                                         <label class="custom-control-label" for="transferRecurring">Transferência recorrente</label>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="transferAttachment" name="comprovante">
+                                        <input type="checkbox" class="custom-control-input" id="transferAttachment" name="comprovante" value="sim">
                                         <label class="custom-control-label" for="transferAttachment">Adicionar comprovante</label>
                                     </div>
                                 </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
-                                <button type="submit" class="btn btn-info">Salvar</button>
+                                <button type="submit" class="btn btn-info" name="submit_transferencia">Salvar</button>
                             </div>
                         </form>
                     </div>

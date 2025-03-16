@@ -1,59 +1,34 @@
-create database fncash;
-use fncash;
+CREATE DATABASE fncash;
+USE fncash;
 
-select * from usuario;
-
-create table usuario (
-	id_usuario int primary key auto_increment,
-    nm_usuario varchar(100),
-    email_usuario varchar(200),
-    senha_usuario varchar(100)
+CREATE TABLE contas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(100) NOT NULL,
+    valor DECIMAL(10, 2) NOT NULL,
+    data DATE NOT NULL,
+    categoria VARCHAR(50) NOT NULL,
+    forma_pagamento VARCHAR(50) NOT NULL,
+    status VARCHAR(20) NOT NULL,
+    observacao TEXT,
+    tipo VARCHAR(20) NOT NULL COMMENT 'despesa, receita ou transferencia',
+    recorrente VARCHAR(3) DEFAULT 'nao',
+    comprovante VARCHAR(3) DEFAULT 'nao',
+    data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-create table contas (
-	id_conta int primary key auto_increment,
-    titulo varchar(250),
-    tipo varchar(250), -- dispesas, receita, transacoes
-    instituicao varchar(250), -- qual banco esta alocada a conta
-    valor double(8,2),
-    descricao MEDIUMTEXT,
-    categoria int(2)
-);
-    
-create table categoria(
-    id_categoria int primary key auto_increment,
-    nome varchar(100) not null,
-    tipo enum('despesa', 'receita', 'transferencia')
-);
- 
-create table contas_banco(
-    id_contas_banco int primary key auto_increment,
-    nm varchar(100),
-    tipo enum('despesa', 'receita', 'transferencia')
-);
-
-create table status_transacao(
-    id_status int primary key auto_increment,
-    tipo enum('pendende', 'efetivada')
-);
-
-create table transacoes(
-    id_transacao int primary key auto_increment,
-    descricao varchar(100),
-    valor decimal(10,2),
-    data_transacao date,
-    id_categoria int,
-    id_contas_banco int,
-    id_status int,
-    observacoes varchar(100),
-    foreign key(id_categoria) references categoria (id_categoria),
-    foreign key(id_contas_banco) references contas_banco (id_contas_banco),
-    foreign key(id_status) references status_transacao (id_status)
-);
-
-create table transacoes_recorrentes(
-    id_transacoes_recorrentes int primary key auto_increment,
-    data_transacao_recorrente date,
-    id_transacao int,
-    foreign key (id_transacao) references transacoes (id_transacao)
+CREATE TABLE cartoes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    bandeira VARCHAR(50) NOT NULL,
+    tipo ENUM('credito', 'debito', 'multiplo') NOT NULL,
+    numero_final VARCHAR(4) NOT NULL,
+    data_validade DATE NOT NULL,
+    limite DECIMAL(10,2) DEFAULT NULL,
+    dia_fechamento INT DEFAULT NULL,
+    dia_vencimento INT DEFAULT NULL,
+    cor VARCHAR(7) DEFAULT '#CCCCCC',
+    ativo TINYINT(1) DEFAULT 1,
+    data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    data_atualizacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
 );

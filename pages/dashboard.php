@@ -2,6 +2,7 @@
 require_once "../conexao.php";
 require_once "../validacao_login.php";
 require_once "header.php";
+require_once "../funcoes.php"
 ?>
 <body>
     <div class="container-fluid">
@@ -42,7 +43,9 @@ require_once "header.php";
                                 <div class="finance-card income">
                                     <i class="fas fa-arrow-circle-up icon"></i>
                                     <h3>Receitas</h3>
-                                    <p class="value">R$ 8.549,32</p>
+                                    <p class="value">
+                                        <?php exibir_conta("receita"); ?>
+                                    </p>
                                     <div class="trend up">
                                         <i class="fas fa-arrow-up"></i> 
                                         <span>12% em relação ao mês anterior</span>
@@ -55,7 +58,9 @@ require_once "header.php";
                                 <div class="finance-card expense">
                                     <i class="fas fa-arrow-circle-down icon"></i>
                                     <h3>Despesas</h3>
-                                    <p class="value">R$ 5.238,17</p>
+                                    <p class="value">
+                                        <?php exibir_conta("despesa"); ?>
+                                    </p>
                                     <div class="trend down">
                                         <i class="fas fa-arrow-down"></i> 
                                         <span>5% em relação ao mês anterior</span>
@@ -68,7 +73,9 @@ require_once "header.php";
                                 <div class="finance-card balance">
                                     <i class="fas fa-wallet icon"></i>
                                     <h3>Saldo</h3>
-                                    <p class="value">R$ 3.311,15</p>
+                                    <p class="value">
+                                        <?php exibir_saldo(); ?>
+                                    </p>
                                     <div class="trend up">
                                         <i class="fas fa-arrow-up"></i> 
                                         <span>18% em relação ao mês anterior</span>
@@ -120,7 +127,7 @@ require_once "header.php";
                             <div class="card shadow-sm h-100 fade-in-right">
                                 <div class="card-header d-flex justify-content-between align-items-center bg-white">
                                     <h5 class="card-title mb-0">Transações Recentes</h5>
-                                    <a href="transactions.html" class="btn btn-sm btn-outline-secondary">Ver todas</a>
+                                    <a href="transacoes.php" class="btn btn-sm btn-outline-secondary">Ver todas</a>
                                 </div>
                                 <div class="card-body p-0">
                                     <ul class="transaction-list">
