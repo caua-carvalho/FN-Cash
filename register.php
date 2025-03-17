@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $error = "E-mail inválido.";
     } else {
         // Verifica se o email já existe
-        $stmt = $conexao->prepare("SELECT id_usuario FROM usuario WHERE email_usuario = ?");
+        $stmt = $conexao->prepare("SELECT id FROM usuario WHERE email = ?");
         $stmt->bind_param("s", $email);
         $stmt->execute();
         $stmt->store_result();
@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             // Insere novo usuário
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-            $stmt = $conexao->prepare("INSERT INTO usuario (nm_usuario, email_usuario, senha_usuario) VALUES (?, ?, ?)");
+            $stmt = $conexao->prepare("INSERT INTO usuario (nome, email, senha) VALUES (?, ?, ?)");
             $stmt->bind_param("sss", $nome, $email, $hashed_password);
             
             if ($stmt->execute()) {
