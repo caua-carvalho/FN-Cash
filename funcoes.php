@@ -118,12 +118,13 @@ function transacoes($tipo){
 //EXIBIR TRANSACOES NO DOC DASHBOARD.PHP
 function transacoes_simplificada(){
     global $conexao;
+    global $dia_mes_ano;
 
     $sql = "
             SELECT 
                 id,
                 titulo,
-                CONCAT('R$ ', FORMAT(valor, 2, 'pt_BR')) AS valor_formatado,
+                valor,
                 DATE_FORMAT(data, '%d/%m/%Y') AS data_formatada,
                 categoria,
                 forma_pagamento,
@@ -132,7 +133,7 @@ function transacoes_simplificada(){
                 tipo,
                 recorrente,
                 comprovante,
-                DATE_FORMAT(data_cadastro, '%d/%m/%Y') AS data_cadastro_formatada,
+                DATE_FORMAT(data_cadastro, '%d/%m/%Y') AS data_cadastro,
                 TIME_FORMAT(TIME(data_cadastro), '%H:%i:%s') AS hora_cadastro
             FROM 
                 contas;";
@@ -143,20 +144,28 @@ function transacoes_simplificada(){
         $row['data_formatda'] = "hoje";
     }
 
+    if($row['tipo'] == "despesa" ){
+        $valor = "- " . $row['valor'];
+        $cor_btn = "bg-despesa";
+    } else{
+        $valor = $row['valor'];
+        $cor_btn = "sucess";
+    }
+
     if($resultado->num_rows > 0){
         foreach($resultado as $row){
             echo '
             <li class="transaction-item p-3">
                 <div class="transaction-info">
-                    <div class="transaction-icon expense">
-                        <i class="fas fa-shopping-cart"></i>
+                    <div class="transaction-icon ' . $cor_btn . '">
+                        <i class="bi bi-basket2-fill"></i>
                     </div>
                     <div class="transaction-details">
                         <h5>' . $row['titulo'] . '</h5>
                         <p>' . $row['data_cadastro'] . '</p>
                     </div>
                 </div>
-                <div class="transaction-amount expense">- R$ 152,35</div>
+                <div class="transaction-amount expense">' . $row['valor'] . '</div>
             </li>';
         }
     }else{

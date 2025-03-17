@@ -131,66 +131,7 @@ require_once "../funcoes.php"
                                 </div>
                                 <div class="card-body p-0">
                                     <ul class="transaction-list">
-                                        <li class="transaction-item p-3">
-                                            <div class="transaction-info">
-                                                <div class="transaction-icon expense">
-                                                    <i class="fas fa-shopping-cart"></i>
-                                                </div>
-                                                <div class="transaction-details">
-                                                    <h5>Supermercado</h5>
-                                                    <p>Hoje, 09:32</p>
-                                                </div>
-                                            </div>
-                                            <div class="transaction-amount expense">- R$ 152,35</div>
-                                        </li>
-                                        <li class="transaction-item p-3">
-                                            <div class="transaction-info">
-                                                <div class="transaction-icon expense">
-                                                    <i class="fas fa-utensils"></i>
-                                                </div>
-                                                <div class="transaction-details">
-                                                    <h5>Restaurante</h5>
-                                                    <p>Ontem, 13:15</p>
-                                                </div>
-                                            </div>
-                                            <div class="transaction-amount expense">- R$ 75,90</div>
-                                        </li>
-                                        <li class="transaction-item p-3">
-                                            <div class="transaction-info">
-                                                <div class="transaction-icon income">
-                                                    <i class="fas fa-credit-card"></i>
-                                                </div>
-                                                <div class="transaction-details">
-                                                    <h5>Salário</h5>
-                                                    <p>12/03/2025</p>
-                                                </div>
-                                            </div>
-                                            <div class="transaction-amount income">+ R$ 4.500,00</div>
-                                        </li>
-                                        <li class="transaction-item p-3">
-                                            <div class="transaction-info">
-                                                <div class="transaction-icon expense">
-                                                    <i class="fas fa-bolt"></i>
-                                                </div>
-                                                <div class="transaction-details">
-                                                    <h5>Conta de Luz</h5>
-                                                    <p>10/03/2025</p>
-                                                </div>
-                                            </div>
-                                            <div class="transaction-amount expense">- R$ 187,32</div>
-                                        </li>
-                                        <li class="transaction-item p-3">
-                                            <div class="transaction-info">
-                                                <div class="transaction-icon expense">
-                                                    <i class="fas fa-tint"></i>
-                                                </div>
-                                                <div class="transaction-details">
-                                                    <h5>Conta de Água</h5>
-                                                    <p>08/03/2025</p>
-                                                </div>
-                                            </div>
-                                            <div class="transaction-amount expense">- R$ 95,47</div>
-                                        </li>
+                                        <?php transacoes_simplificada(); ?>
                                     </ul>
                                 </div>
                             </div>

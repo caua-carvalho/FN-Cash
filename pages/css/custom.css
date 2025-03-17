@@ -56,6 +56,11 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--primary);
 }
 
+.bg-despesa {
+    background-color: red !important;
+    color: white;
+}
+
 .text-primary {
     color: var(--primary) !important;
 }
