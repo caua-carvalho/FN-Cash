@@ -140,7 +140,7 @@ function transacoes_simplificada(){
     $row = mysqli_fetch_assoc($resultado);
 
     if($row['data_formatada'] == $dia_mes_ano){
-        $row['data_formatda'] = "hoje"
+        $row['data_formatda'] = "hoje";
     }
 
     if($resultado->num_rows > 0){
