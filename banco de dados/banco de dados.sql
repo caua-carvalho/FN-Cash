@@ -26,3 +26,12 @@ CREATE TABLE contas (
     icone varchar(100)
 );
 
+create table metas (
+    id_metas int primary key auto_increment,
+		titulo varchar(250) not null,
+		descricao text not null,
+		icone varchar(250) not null,
+		data_criacao timestamp default current_timestamp,
+		data_atualizacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
