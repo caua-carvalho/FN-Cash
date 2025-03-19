@@ -28,16 +28,38 @@ function exibir_conta($tipo){
     echo "R$ " . $valor_despesa;
 }
 
+
+
+function select_despesa(){
+    global $conexao;
+    $sql = "SELECT * FROM contas WHERE tipo = 'despesa'";   
+    $resultado = mysqli_query($conexao, $sql);
+    $row = mysqli_fetch_assoc($resultado);
+
+    if($resultado->num_rows > 0){
+        $valor = $row["valor"];
+
+        return $valor;
+    }
+}
+
+function select_receita(){
+    global $conexao;
+    $sql = "SELECT * FROM contas WHERE tipo = 'receita'";   
+    $resultado = mysqli_query($conexao, $sql);
+    $row = mysqli_fetch_assoc($resultado);
+
+    if($resultado->num_rows > 0){
+        $valor = $row["valor"];
+
+        return $valor;
+    }
+}
+
 // SALDO
 function exibir_saldo(){
     global $conexao;
-    $sql = "SELECT 
-                (SELECT COALESCE(SUM(valor), 0) FROM contas WHERE tipo = 'despesa') - 
-                (SELECT COALESCE(SUM(valor), 0) FROM contas WHERE tipo = 'receita') AS saldo";
-    
-    $resultado = mysqli_query($conexao, $sql);
-    $row = mysqli_fetch_assoc($resultado);
-    $saldo = $row['saldo'];
+    $saldo = select_receita() - select_despesa();
 
     echo "R$ " . $saldo;
 }
@@ -140,19 +162,19 @@ function transacoes_simplificada(){
     $resultado = $conexao->query($sql);
     $row = mysqli_fetch_assoc($resultado);
 
-    if($row['data_formatada'] == $dia_mes_ano){
-        $row['data_formatda'] = "hoje";
-    }
-
-    if($row['tipo'] == "despesa" ){
-        $valor = "- " . $row['valor'];
-        $cor_btn = "bg-despesa";
-    } else{
-        $valor = $row['valor'];
-        $cor_btn = "sucess";
-    }
-
     if($resultado->num_rows > 0){
+        if($row['data_formatada'] == $dia_mes_ano){
+            $row['data_formatda'] = "hoje";
+        }
+
+        if($row['tipo'] == "despesa" ){
+            $valor = "- " . $row['valor'];
+            $cor_btn = "bg-despesa";
+        } else{
+            $valor = $row['valor'];
+            $cor_btn = "sucess";
+        }
+
         foreach($resultado as $row){
             echo '
             <li class="transaction-item p-3">
@@ -169,7 +191,7 @@ function transacoes_simplificada(){
             </li>';
         }
     }else{
-        echo "0 resultados encontrados";
+        echo '0 resultados encontrados.';
     }   
 }
 
