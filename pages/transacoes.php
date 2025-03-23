@@ -18,7 +18,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_POST["observacao"],
             "despesa",
             $_POST["recorrente"],
-            $_POST["comprovante"]
+            $_POST["comprovante"],
+            $_POST['icone_conta']
         );
         header("Location: transacoes.php?sucesso");
     } elseif (isset($_POST['submit_receita'])) {
@@ -34,7 +35,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_POST["observacao"],
             "receita",
             $_POST["recorrente"],
-            $_POST["comprovante"]
+            $_POST["comprovante"],
+            $_POST['icone_conta']
         );
     } elseif (isset($_POST['submit_transferencia'])) {
         // Processar formulário de transferência
@@ -49,7 +51,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_POST["observacao"],
             "transacoes",
             $_POST["recorrente"],
-            $_POST["comprovante"]
+            $_POST["comprovante"],
+            $_POST['icone_conta']
         );
     }
 }
@@ -959,83 +962,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <!-- CSS para melhorar a aparência do seletor de ícones -->
 <style>
-/* Estilos para o seletor de ícones */
-.icon-selector-container {
-    max-height: 300px;
-    overflow-y: auto;
-    background-color: #f8f9fa;
-    scrollbar-width: thin;
-}
 
-.icon-selector-container::-webkit-scrollbar {
-    width: 8px;
-}
-
-.icon-selector-container::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 4px;
-}
-
-.icon-selector-container::-webkit-scrollbar-thumb {
-    background: #ccc;
-    border-radius: 4px;
-}
-
-.icon-selector-container::-webkit-scrollbar-thumb:hover {
-    background: #999;
-}
-
-.icon-category {
-    font-weight: bold;
-    margin-top: 10px;
-    margin-bottom: 5px;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 3px;
-}
-
-.icon-category:first-child {
-    margin-top: 0;
-}
-
-.icon-grid-container {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
-    margin-bottom: 10px;
-}
-
-.icon-select-btn, .icon-select-btn-receita, .icon-select-btn-origem, .icon-select-btn-destino {
-    width: 42px;
-    height: 42px;
-    padding: 8px;
-    border-radius: 4px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.icon-select-btn i, .icon-select-btn-receita i, .icon-select-btn-origem i, .icon-select-btn-destino i {
-    font-size: 18px;
-}
-
-/* Cores específicas para cada tipo de transação */
-.icon-select-btn.active {
-    background-color: #dc3545;
-    color: white;
-    border-color: #dc3545;
-}
-
-.icon-select-btn-receita.active {
-    background-color: #28a745;
-    color: white;
-    border-color: #28a745;
-}
-
-.icon-select-btn-origem.active, .icon-select-btn-destino.active {
-    background-color: #0d6efd;
-    color: white;
-    border-color: #0d6efd;
-}
 </style>
 
 <!-- JavaScript para o funcionamento do seletor de ícones -->

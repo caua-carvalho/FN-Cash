@@ -5,9 +5,9 @@ $dia_mes = date('d-m');
 $dia_mes_ano = date('d-m-Y');
 
 // CADASTRO DE DESPESAS
-function cadastro_contas($conexao, $titulo, $valor, $data, $categoria, $forma_pagamento, $status, $observacao, $tipo, $recorrente, $comprovante) {
-    $stmt = $conexao->prepare("INSERT INTO contas (titulo, valor, data, categoria, forma_pagamento, status, observacao, tipo, recorrente, comprovante) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("sdssssssss", $titulo, $valor, $data, $categoria, $forma_pagamento, $status, $observacao, $tipo, $recorrente, $comprovante);
+function cadastro_contas($conexao, $titulo, $valor, $data, $categoria, $forma_pagamento, $status, $observacao, $tipo, $recorrente, $comprovante, $icone) {
+    $stmt = $conexao->prepare("INSERT INTO contas (titulo, valor, data, categoria, forma_pagamento, status, observacao, tipo, recorrente, comprovante, icone) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("sdsssssssss", $titulo, $valor, $data, $categoria, $forma_pagamento, $status, $observacao, $tipo, $recorrente, $comprovante, $icone);
     
     $resultado = $stmt->execute();
     header("Location: transacoes.php");
@@ -23,21 +23,21 @@ function exibir_conta($tipo){
     $sql = "SELECT SUM(valor) as valor FROM contas WHERE tipo = '" . $tipo . "'";
     $resultado = mysqli_query($conexao, $sql);
     $row = mysqli_fetch_assoc($resultado);
-    $valor_despesa = $row['valor'] ? $row['valor'] : 0;
+    $conta = $row['valor'] ? $row['valor'] : 0;
 
-    echo "R$ " . $valor_despesa;
+    echo "R$ " . $conta;
 }
 
 
 
 function select_despesa(){
     global $conexao;
-    $sql = "SELECT * FROM contas WHERE tipo = 'despesa'";   
+    $sql = "SELECT SUM(valor) as valor FROM contas WHERE tipo = 'despesa'";   
     $resultado = mysqli_query($conexao, $sql);
     $row = mysqli_fetch_assoc($resultado);
 
     if($resultado->num_rows > 0){
-        $valor = $row["valor"];
+        $valor = $row['valor'];
 
         return $valor;
     }
@@ -45,7 +45,7 @@ function select_despesa(){
 
 function select_receita(){
     global $conexao;
-    $sql = "SELECT * FROM contas WHERE tipo = 'receita'";   
+    $sql = "SELECT SUM(valor) as valor FROM contas WHERE tipo = 'receita'";   
     $resultado = mysqli_query($conexao, $sql);
     $row = mysqli_fetch_assoc($resultado);
 
@@ -156,7 +156,8 @@ function transacoes_simplificada(){
                 recorrente,
                 comprovante,
                 DATE_FORMAT(data_cadastro, '%d/%m/%Y') AS data_cadastro,
-                TIME_FORMAT(TIME(data_cadastro), '%H:%i:%s') AS hora_cadastro
+                TIME_FORMAT(TIME(data_cadastro), '%H:%i:%s') AS hora_cadastro,
+                icone
             FROM 
                 contas;";
     $resultado = $conexao->query($sql);
@@ -169,31 +170,32 @@ function transacoes_simplificada(){
 
         if($row['tipo'] == "despesa" ){
             $valor = "- " . $row['valor'];
-            $cor_btn = "bg-despesa";
+            $cor_btn = "expense";
+            $cor_valor = "expense";
         } else{
             $valor = $row['valor'];
-            $cor_btn = "sucess";
+            $cor_btn = "bg-accent";
+            $cor_valor = "";
         }
 
         foreach($resultado as $row){
             echo '
             <li class="transaction-item p-3">
                 <div class="transaction-info">
-                    <div class="transaction-icon ' . $cor_btn . '">
-                        <i class="bi bi-basket2-fill"></i>
+                    <div class="btn ' . $cor_btn . '" style="border-radius: 100px; margin-right:">
+                        <i class="bi bi-' . $row["icone"] . '"></i>
                     </div>
                     <div class="transaction-details">
                         <h5>' . $row['titulo'] . '</h5>
                         <p>' . $row['data_cadastro'] . '</p>
                     </div>
                 </div>
-                <div class="transaction-amount expense">' . $row['valor'] . '</div>
+                <div class="transaction-amount ' . $cor_valor . '">' . $row['valor'] . '</div>
             </li>';
         }
     }else{
         echo '0 resultados encontrados.';
     }   
 }
-
 
 ?>
